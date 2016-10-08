@@ -1,0 +1,50 @@
+
+@import 'https://fonts.googleapis.com/css?family=Hammersmith+One|Open+Sans:400,700';
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #888;
+}
+
+h1, h2, h3 {
+    color: black;
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+.jumbotron {
+    background-color: transparent;
+    color: white;
+}
+
+.jumbotron h1, .jumbotron h2 {
+    color: white;
+}
+
+.jumbotron h1 {
+    font-family: 'Hammersmith One', sans-serif;
+    font-size: 64pt;
+}
+
+.jumbotron h2 {
+    font-weight: 700;
+    letter-spacing: 6px;
+}
+
+.navbar-default {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.navbar-default ul li {
+    margin-right: 48px;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+    font-size: 18pt;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+    color: white;
+    font-family: 'Hammersmith One';
+    font-size: 14pt;
+}

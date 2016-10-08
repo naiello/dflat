@@ -1,0 +1,42 @@
+@import url('theme.css');
+
+p {
+    font-size: 12pt;
+}
+
+section {
+    background-color: #F8F8F8;
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+section.dark {
+    background-color: #111;
+}
+
+section.dark * {
+    color: #F8F8F8;
+}
+
+#cover {
+    padding-top: 200px;
+    padding-bottom: 250px;
+    background: url('../images/main-cover2.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.img-responsive {
+    margin: 0 auto;
+}
+
+.img-circle {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+#team img {
+    width: 200px;
+    height: auto;
+}
