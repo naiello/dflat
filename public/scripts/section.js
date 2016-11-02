@@ -1,8 +1,15 @@
+$.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return (Array.isArray(results)) ? results[1] : undefined;
+}
+
 $(function() {
+    var sectionName = $.urlParam('s');
+    $('.section-name-header').html(sectionName);
     $.get({
         url: 'api/section.php',
         data: {
-            s: 'Falto'
+            s: sectionName
         }
     }).done(function(mem) {
         if (!Array.isArray(mem)) {
