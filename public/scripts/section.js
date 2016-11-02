@@ -68,7 +68,7 @@ $(function() {
     $('#btn-submit').on('click', $('#update-member-form').submit);
     $('#update-member-form').on('submit', function(event) {
         var mode = $('#inp-mode').val();
-        var request = {
+        $.post({
             url: 'api/update_member.php',
             data: {
                 mode: $('#inp-mode').val(),
@@ -79,6 +79,10 @@ $(function() {
                 status: $('#status option:selected').val(),
                 year: parseInt($('#year option:selected').val())
             }
-        }
+        }).done(function(result) {
+            console.log(result);
+        }).fail(function(err) {
+            console.log(err);
+        });
     });
 });
