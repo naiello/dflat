@@ -50,7 +50,7 @@ $(function() {
                 '<td>' + mem[i].last_name + '</td>' +
                 '<td>' + classYears[mem[i].year] + '</td>' +
                 '<td>' + level + '</td>' +
-                '<td>' + tatus + '</td>' +
+                '<td>' + status + '</td>' +
                 '<td><a href="#">Edit</a></td><tr>'
             );
         }
