@@ -63,3 +63,15 @@ h1, h2, h3 {
 thead {
     font-weight: bold;
 }
+
+.text-bad {
+    color: darkred;
+}
+
+.text-warn {
+    color: goldenrod;
+}
+
+.text-good {
+    color: darkgreen;
+}
