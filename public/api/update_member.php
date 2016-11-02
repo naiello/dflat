@@ -20,7 +20,7 @@ if (!empty($_POST["level"])) {
     $core = ($_POST["level"] === "core") ? "Y" : NULL;
     $new_member = ($_POST["level"] === "new") ? "Y" : NULL;
 }
-$status = (empty($_POST["status"])) ? NULL : $_POST["status"];
+$status = ($_POST["status"] === "") ? NULL : $_POST["status"];
 
 if ($_POST["mode"] == "new") {
     $sql = $db->prepare("INSERT INTO band_members VALUES (?, ?, ?, ?, ?, ?, ?);");
@@ -34,7 +34,9 @@ if ($_POST["mode"] == "new") {
 }
 
 $result = $sql->execute();
-$json = "{'success': " . $result . "}";
+$json = array(
+    'success' => $result,
+);
 
 header('Content-Type: application/json');
 echo $json;

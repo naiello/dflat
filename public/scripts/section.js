@@ -1,6 +1,6 @@
-$.urlParam = function(name){
-	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-	return (Array.isArray(results)) ? results[1] : undefined;
+$.urlParam = function(name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return (Array.isArray(results)) ? results[1] : undefined;
 }
 
 function loadMemberList() {
@@ -35,7 +35,7 @@ function loadMemberList() {
         $table = $('table tbody').html('');
         var level = "Returning";
         var status;
-		var $row;
+        var $row;
         for (var i = 0; i < mem.length; i++) {
             if (mem[i].core == "Y") {
                 level = "CORE";
@@ -54,27 +54,27 @@ function loadMemberList() {
                 '<td>' + status + '</td>' +
                 '<td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><tr>'
             );
-			$row.find('a').data(mem[i]);
-                        $row.find('a').on('click', function (event) {
-				var $target = $(event.delegateTarget);
-				var mem = $target.data();
-				$('#add-mode').val('update');
-				$('#first-name').val(mem.first_name);
-				$('#last-name').val(mem.last_name);
-				$('#year').val(mem.year);
-				if (mem.core === "Y") {
-					$('input[name=level][value=core]').prop('checked', true);
-				} else if (mem.new_member === "Y") {
-					$('input[name=level][value=new]').prop('checked', true);
-				} else {
-					$('input[name=level][value=ret]').prop('checked', true);
-				}
-				$('#status').val(mem.status);
-				$('#update-member-dialog').modal();
-			});
-			$table.append($row);
+            $row.find('a').data(mem[i]);
+            $row.find('a').on('click', function(event) {
+                var $target = $(event.delegateTarget);
+                var mem = $target.data();
+                $('#add-mode').val('update');
+                $('#first-name').val(mem.first_name);
+                $('#last-name').val(mem.last_name);
+                $('#year').val(mem.year);
+                if (mem.core === "Y") {
+                    $('input[name=level][value=core]').prop('checked', true);
+                } else if (mem.new_member === "Y") {
+                    $('input[name=level][value=new]').prop('checked', true);
+                } else {
+                    $('input[name=level][value=ret]').prop('checked', true);
+                }
+                $('#status').val(mem.status);
+                $('#update-member-dialog').modal();
+            });
+            $table.append($row);
         }
-    }).fail(function(err){
+    }).fail(function(err) {
         console.log(err);
         $('.alert-danger .msg').html('Failed to connect to database!');
         $('.alert-danger').slideDown();
@@ -84,16 +84,18 @@ function loadMemberList() {
 $(function() {
     loadMemberList();
 
-    $('#btn-add-member').on('click', function (e) {
-		$('#add-mode').val('new');
-		$('#first-name').val('');
-		$('#last-name').val('');
-		$('#update-member-dialog').modal();
-	});
-    $('#btn-submit').on('click', () => { $('#update-member-form').submit() });
+    $('#btn-add-member').on('click', function(e) {
+        $('#add-mode').val('new');
+        $('#first-name').val('');
+        $('#last-name').val('');
+        $('#update-member-dialog').modal();
+    });
+    $('#btn-submit').on('click', () => {
+        $('#update-member-form').submit()
+    });
     $('#update-member-form').on('submit', function(event) {
         event.preventDefault();
-		$('#update-member-dialog').modal('hide');
+        $('#update-member-dialog').modal('hide');
         var mode = $('#add-mode').val();
         $.post('api/update_member.php', {
             mode: $('#add-mode').val(),
@@ -105,7 +107,7 @@ $(function() {
             year: parseInt($('#year option:selected').val())
         }).done(function(result) {
             console.log(result);
-			loadMemberList();
+            loadMemberList();
         }).fail(function(err) {
             console.log(err);
         });
