@@ -151,7 +151,9 @@ $(function() {
             last_name: mem.last_name
         }).done(function(resp) {
             console.log('delete success');
-            $('#delete-member-dialog').data({});
+            var $dialog = $('#delete-member-dialog');
+            $dialog.data({});
+            $dialog.modal('hide');
             loadMemberList();
         }).fail(function(resp) {
             console.log(resp);
