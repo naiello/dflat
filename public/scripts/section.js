@@ -54,8 +54,9 @@ function loadMemberList() {
                 '<td>' + status + '</td>' +
                 '<td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><tr>'
             );
-			$row.find('a').data(mem[i]).on('click', function (event) {
-				var $target = $(event.target);
+			$row.find('a').data(mem[i]);
+                        $row.find('a').on('click', function (event) {
+				var $target = $(event.delegateTarget);
 				var mem = $target.data();
 				$('#add-mode').val('update');
 				$('#first-name').val(mem.first_name);
@@ -84,7 +85,7 @@ $(function() {
     loadMemberList();
 
     $('#btn-add-member').on('click', function (e) {
-		$('#inp-mode').val('new');
+		$('#add-mode').val('new');
 		$('#first-name').val('');
 		$('#last-name').val('');
 		$('#update-member-dialog').modal();
@@ -92,9 +93,9 @@ $(function() {
     $('#btn-submit').on('click', () => { $('#update-member-form').submit() });
     $('#update-member-form').on('submit', function(event) {
         event.preventDefault();
-        var mode = $('#inp-mode').val();
+        var mode = $('#add-mode').val();
         $.post('api/update_member.php', {
-            mode: $('#inp-mode').val(),
+            mode: $('#add-mode').val(),
             first_name: $('#first-name').val(),
             last_name: $('#last-name').val(),
             section: $.urlParam('s'),

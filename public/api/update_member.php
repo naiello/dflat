@@ -18,7 +18,7 @@ $core = NULL;
 $new_member = NULL;
 if (!empty($_POST["level"])) {
     $core = ($_POST["level"] === "core") ? "Y" : NULL;
-    $year = ($_POST["level"] === "new") ? "Y" : NULL;
+    $new_member = ($_POST["level"] === "new") ? "Y" : NULL;
 }
 $status = (empty($_POST["status"])) ? NULL : $_POST["status"];
 
@@ -27,7 +27,7 @@ if ($_POST["mode"] == "new") {
     $sql->bind_param("sssssss", $last, $first, $section, $year, $core, $new_member, $status);
 } else if ($_POST["mode"] == "update") {
     $sql = $db->prepare("UPDATE band_members SET last_name = ?, first_name = ?, section = ?, year = ?, core = ?, new_member = ?, status = ? WHERE first_name = ? and last_name = ?;");
-    $sql->bind_param("sssssss", $last, $first, $section, $year, $core, $new_member, $status, $first, $last);
+    $sql->bind_param("sssssssss", $last, $first, $section, $year, $core, $new_member, $status, $first, $last);
 } else if ($_POST["mode"] == "delete") {
     $sql = $db->prepare("DELETE FROM band_members WHERE first_name = ? and last_name = ?;");
     $sql->bind_param("ss", $first, $last);
