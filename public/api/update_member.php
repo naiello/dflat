@@ -39,6 +39,6 @@ $json = array(
 );
 
 header('Content-Type: application/json');
-echo $json;
+echo json_encode($json);
 
 ?>
