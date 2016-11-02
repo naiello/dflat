@@ -87,8 +87,12 @@ function loadMemberList() {
 
             // callback for delete button click
             $row.find('.remove-member').on('click', function(event) {
-                var $target = $(event.delegateTarget);
-                $('#delete-member-dialog').data($target.data());
+                var mem = $(event.delegateTarget).data();
+                var $dialog = $('#delete-member-dialog');
+                $dialog.find('.del-dialog-first-name').html(mem.first_name);
+                $dialog.find('.del-dialog-last-name').html(mem.last_name);
+                $dialog.data($target.data());
+                $dialog.modal();
             });
 
             // add row to table
