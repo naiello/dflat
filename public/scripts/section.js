@@ -65,20 +65,17 @@ $(function() {
     loadMemberList();
 
     $('#btn-add-member').on('click', () => { $('#inp-mode').val('new'); });
-    $('#btn-submit').on('click', $('#update-member-form').submit);
+    $('#btn-submit').on('click', () => { $('#update-member-form').submit() });
     $('#update-member-form').on('submit', function(event) {
         var mode = $('#inp-mode').val();
-        $.post({
-            url: 'api/update_member.php',
-            data: {
-                mode: $('#inp-mode').val(),
-                first_name: $('#first-name').val(),
-                last_name: $('#last-name').val(),
-                section: $.urlParam('s'),
-                level: $('input[name=level]:checked').val(),
-                status: $('#status option:selected').val(),
-                year: parseInt($('#year option:selected').val())
-            }
+        $.post('api/update_member.php', {
+            mode: $('#inp-mode').val(),
+            first_name: $('#first-name').val(),
+            last_name: $('#last-name').val(),
+            section: $.urlParam('s'),
+            level: $('input[name=level]:checked').val(),
+            status: $('#status option:selected').val(),
+            year: parseInt($('#year option:selected').val())
         }).done(function(result) {
             console.log(result);
         }).fail(function(err) {
