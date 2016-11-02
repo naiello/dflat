@@ -10,37 +10,28 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
+$first = $_POST["first_name"];
+$last = $_POST["last_name"];
+$section = $_POST["section"];
+$year = $_POST["year"];
+$core = NULL;
+$new_member = NULL;
+if (!empty($_POST["level"])) {
+    $core = ($_POST["level"] === "core") ? "Y" : NULL;
+    $year = ($_POST["level"] === "new") ? "Y" : NULL;
+}
+$status = (empty($_POST["status"])) ? NULL : $_POST["status"];
+
 if ($_POST["mode"] == "new") {
-    $sql = "INSERT INTO band_members (last_name, first_name, section, year, core, new_member, status) ";
-    $sql .= "('" . $_POST['last_name'] . "',";
-    $sql .= "'" . $_POST['first_name'] . "',";
-    $sql .= "'" . $_POST['section'] . "',";
-    $sql .= $_POST['year'] . ",";
-    if ($_POST['level'] == "core") {
-        $sql .= "'Y',";
-    } else {
-        $sql .= "NULL,";
-    }
-    if ($_POST['level'] == "new") {
-        $sql .= "'Y',";
-    } else {
-        $sql .= "NULL,";
-    }
-    if ($_POST['status'] == "") {
-        $sql .= "NULL";
-    } else {
-        $sql .= "'" . $_POST["status"] . "'";
-    }
-    $sql .= ");"
+    $sql = $db->prepare("INSERT INTO band_members VALUES (?, ?, ?, ?, ?, ?, ?)");
 }
 
-$result = $db->query($sql);
-$json = array(
-    "status" => $result,
-    "sql" => $sql,
-);
+$sql->bind_param("sssssss", $first, $last, $section, $year, $core, $new_member, $status);
+
+$result = $sql->execute();
+$json = "{'success': " . $result . "}";
 
 header('Content-Type: application/json');
-echo json_encode($json);
+echo $json;
 
 ?>
