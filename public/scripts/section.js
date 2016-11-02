@@ -3,7 +3,7 @@ $.urlParam = function(name){
 	return (Array.isArray(results)) ? results[1] : undefined;
 }
 
-$(function() {
+function loadMemberList() {
     var sectionName = $.urlParam('s');
     $('.section-name-header').html(sectionName);
     $.get({
@@ -26,7 +26,7 @@ $(function() {
         ];
 
         statusColors = {
-            Injured: 'text-bad',
+            Injury: 'text-bad',
             Suspended: 'text-bad',
             Absent: 'text-warn',
             Inactive: 'text-warn'
@@ -51,12 +51,34 @@ $(function() {
                 '<td>' + classYears[mem[i].year] + '</td>' +
                 '<td>' + level + '</td>' +
                 '<td>' + status + '</td>' +
-                '<td><a href="#">Edit</a></td><tr>'
+                '<td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><tr>'
             );
         }
     }).fail(function(err){
         console.log(err);
         $('.alert-danger .msg').html('Failed to connect to database!');
         $('.alert-danger').slideDown();
+    });
+}
+
+$(function() {
+    loadMemberList();
+
+    $('#btn-add-member').on('click', () => { $('#inp-mode').val('new'); });
+    $('#btn-submit').on('click', $('#update-member-form').submit);
+    $('#update-member-form').on('submit', function(event) {
+        var mode = $('#inp-mode').val();
+        var request = {
+            url: 'api/update_member.php',
+            data: {
+                mode: $('#inp-mode').val(),
+                first_name: $('#first-name').val(),
+                last_name: $('#last-name').val(),
+                section: $.urlParam('s'),
+                level: $('input[name=level]:checked').val(),
+                status: $('#status option:selected').val(),
+                year: parseInt($('#year option:selected').val())
+            }
+        }
     });
 });

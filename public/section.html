@@ -48,13 +48,15 @@
             <p>
                 From here you can view your section's roster, add or remove members, and edit their status.
             </p>
-
+            <button id="btn-add-member" class="btn btn-default" data-toggle="modal" data-target="#update-member-dialog">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Member
+            </button>
             <table class="table table-responsive table-hover table-bordered">
                 <thead>
                     <tr>
                         <td>First Name</td>
                         <td>Last Name</td>
-                        <td>Class</td>
+                        <td>Year</td>
                         <td>Level</td>
                         <td>Status</td>
                         <td>Edit</td>
@@ -63,6 +65,50 @@
                 <tbody>
                 </tbody>
             </table>
+        </div>
+        <div id="update-member-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Add/Update Member</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form id="update-member-form">
+                            <input type="hidden" value="new" id="add-mode" name="mode" />
+                            <label for="first-name">First Name: </label>
+                            <input type="text" id="first-name" name="first-name" placeholder="Sam" required /><br />
+                            <label for="last-name">Last Name: </label>
+                            <input type="text" id="last-name" name="last-name" placeholder="Sanchez" required /><br />
+                            <input type="radio" id="level-new" name="level" value="new" checked />
+                            <label for="level-new">New Member</label><br />
+                            <input type="radio" id="level-ret" name="level" value="ret" />
+                            <label for="level-ret">Returning</label><br />
+                            <input type="radio" id="level-core" name="level" value="core" />
+                            <label for="level-core">CORE</label><br />
+                            <label for="year">Year:</label><br />
+                            <select name="year" id="year">
+                                <option value="1">Freshman</option>
+                                <option value="2">Sophomore</option>
+                                <option value="3">Junior</option>
+                                <option value="4">Senior</option>
+                                <option value="5">5th Year / Grad</option>
+                            </select><br />
+                            <label for="status">Status:</label><br />
+                            <select name="status" id="status">
+                                <option value="">Active</option>
+                                <option value="Injury">Injury</option>
+                                <option value="Suspended">Suspended</option>
+                                <option value="Absent">Absent</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default">Cancel</button>
+                        <button id="btn-submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

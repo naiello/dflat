@@ -10,7 +10,7 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-$sql = "SELECT * FROM band_members WHERE section = '" . $_GET["s"] . "';";
+$sql = "SELECT * FROM band_members WHERE section = '" . $_GET["s"] . "' ORDER BY year dest, last_name, first_name;";
 $result = $db->query($sql);
 $json = array();
 

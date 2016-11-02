@@ -75,3 +75,10 @@ thead {
 .text-good {
     color: darkgreen;
 }
+
+input[type=text], select {
+    padding: 4px;
+    margin: 8px;
+    border-radius: 8px;
+    border: solid 1px #AAA;
+}
