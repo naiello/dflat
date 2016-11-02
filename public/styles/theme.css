@@ -48,3 +48,17 @@ h1, h2, h3 {
     font-family: 'Hammersmith One';
     font-size: 14pt;
 }
+
+.img-header {
+    padding-top: 250px;
+}
+
+.img-header h1 {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    padding: 16px;
+}
+
+thead {
+    font-weight: bold;
+}
