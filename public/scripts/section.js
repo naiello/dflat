@@ -34,7 +34,7 @@ function loadMemberList() {
         }
 
         $table = $('table tbody').html('');
-        var level = "Returning";
+        var level;
         var status;
         var $row;
         for (var i = 0; i < mem.length; i++) {
@@ -42,6 +42,8 @@ function loadMemberList() {
                 level = "CORE";
             } else if (mem[i].new_member === "Y") {
                 level = "New Member";
+            } else {
+                level = "Returning";
             }
             status = mem[i].status;
             if (status && statusColors.hasOwnProperty(status)) {
