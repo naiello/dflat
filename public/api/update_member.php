@@ -14,13 +14,13 @@ $first = $_POST["first_name"];
 $last = $_POST["last_name"];
 $section = $_POST["section"];
 $year = $_POST["year"];
-$core = NULL;
-$new_member = NULL;
+$core = "";
+$new_member = "";
 if (!empty($_POST["level"])) {
-    $core = ($_POST["level"] === "core") ? "Y" : NULL;
-    $new_member = ($_POST["level"] === "new") ? "Y" : NULL;
+    $core = ($_POST["level"] === "core") ? "Y" : "";
+    $new_member = ($_POST["level"] === "new") ? "Y" : "";
 }
-$status = ($_POST["status"] === "") ? NULL : $_POST["status"];
+$status = $_POST["status"];
 
 if ($_POST["mode"] == "new") {
     $sql = $db->prepare("INSERT INTO band_members VALUES (?, ?, ?, ?, ?, ?, ?);");
