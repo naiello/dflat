@@ -67,6 +67,7 @@ $(function() {
     $('#btn-add-member').on('click', () => { $('#inp-mode').val('new'); });
     $('#btn-submit').on('click', () => { $('#update-member-form').submit() });
     $('#update-member-form').on('submit', function(event) {
+        event.preventDefault();
         var mode = $('#inp-mode').val();
         $.post('api/update_member.php', {
             mode: $('#inp-mode').val(),
