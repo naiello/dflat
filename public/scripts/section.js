@@ -89,9 +89,9 @@ function loadMemberList() {
             $row.find('.remove-member').on('click', function(event) {
                 var mem = $(event.delegateTarget).data();
                 var $dialog = $('#delete-member-dialog');
-                $dialog.find('.del-dialog-first-name').html(mem.first_name);
-                $dialog.find('.del-dialog-last-name').html(mem.last_name);
-                $dialog.data($target.data());
+                $dialog.find('#del-dialog-first-name').html(mem.first_name);
+                $dialog.find('#del-dialog-last-name').html(mem.last_name);
+                $dialog.data(mem);
                 $dialog.modal();
             });
 
@@ -149,12 +149,12 @@ $(function() {
             mode: 'delete',
             first_name: mem.first_name,
             last_name: mem.last_name
-        }).done(function() {
+        }).done(function(resp) {
             console.log('delete success');
             $('#delete-member-dialog').data({});
             loadMemberList();
-        }).fail(function() {
-            console.log('delete failed');
+        }).fail(function(resp) {
+            console.log(resp);
         });
     });
 });
