@@ -35,6 +35,7 @@ function loadMemberList() {
         $table = $('table tbody');
         var level = "Returning";
         var status;
+		var $row;
         for (var i = 0; i < mem.length; i++) {
             if (mem[i].core == "Y") {
                 level = "CORE";
@@ -45,14 +46,31 @@ function loadMemberList() {
             if (status && statusColors.hasOwnProperty(status)) {
                 status = '<span class="' + statusColors[status] + '">' + status + "</span>";
             }
-            $table.append('<tr>' +
+            $row = $('<tr id="tb-row-' + i + '">' +
                 '<td>' + mem[i].first_name + '</td>' +
                 '<td>' + mem[i].last_name + '</td>' +
                 '<td>' + classYears[mem[i].year] + '</td>' +
                 '<td>' + level + '</td>' +
                 '<td>' + status + '</td>' +
                 '<td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><tr>'
-            );
+            ).find('a').data(mem[i]).on('click', function (event) {
+				var $target = $(event.target);
+				var mem = $target.data();
+				$('#add-mode').val('update');
+				$('#first-name').val(mem.first_name);
+				$('#last-name').val(mem.last_name);
+				$('#year').val(mem.year);
+				if (mem.core === "Y") {
+					$('input[name=level][value=core]').prop('checked', true);
+				} else if (mem.new_member === "Y") {
+					$('input[name=level][value=new]').prop('checked', true);
+				} else {
+					$('input[name=level][value=ret]').prop('checked', true);
+				}
+				$('#status').val(mem.status);
+				$('#update-member-dialog').modal();
+			});
+			$table.append($row);
         }
     }).fail(function(err){
         console.log(err);
@@ -64,7 +82,12 @@ function loadMemberList() {
 $(function() {
     loadMemberList();
 
-    $('#btn-add-member').on('click', () => { $('#inp-mode').val('new'); });
+    $('#btn-add-member').on('click', function (e) {
+		$('#inp-mode').val('new');
+		$('#first-name').val('');
+		$('#last-name').val('');
+		$('#update-member-dialog').modal();
+	});
     $('#btn-submit').on('click', () => { $('#update-member-form').submit() });
     $('#update-member-form').on('submit', function(event) {
         event.preventDefault();
