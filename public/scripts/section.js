@@ -38,9 +38,9 @@ function loadMemberList() {
         var status;
         var $row;
         for (var i = 0; i < mem.length; i++) {
-            if (mem[i].core == "Y") {
+            if (mem[i].core === "Y") {
                 level = "CORE";
-            } else if (mem[i].new_member) {
+            } else if (mem[i].new_member === "Y") {
                 level = "New Member";
             }
             status = mem[i].status;
