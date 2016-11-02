@@ -1,21 +1,21 @@
 <?php
-$servername = "dsg1.crc.nd.edu";
+$servername = "localhost";
 $username = "naiello";
 $password = "correcthorsebatterystaple";
-$dbname = "Db"
+$dbname = "db";
 
 $db = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($db->connect_error) {
+    die("Connection failed: " . $db->connect_error);
 }
 
 $sql = "SELECT * FROM band_members WHERE section = '" . $_GET["s"] . "';";
 $result = $db->query($sql);
 $json = array();
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if ($result && mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
         array_push($json, $row);
     }
 }
