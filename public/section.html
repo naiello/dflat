@@ -110,6 +110,24 @@
                 </div>
             </div>
         </div>
+        <div id="delete-member-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Confirm Delete Member</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p class="alert alert-danger">
+                            Are you sure you want to remove member <span id="del-dialog-first-name"></span> <span id="del-dialog-last-name"></span>?
+                            This cannot be undone.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default">Cancel</button>
+                        <button id="btn-submit-del" class="btn btn-default">Delete</button>
+                    </div>
+                </div>
+            </div>
     </div>
     <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

@@ -6,6 +6,7 @@ $.urlParam = function(name) {
 function loadMemberList() {
     var sectionName = $.urlParam('s');
     $('.section-name-header').html(sectionName);
+    // AJAX request to server code -- returns JSON array of member objects
     $.get({
         url: 'api/section.php',
         data: {
@@ -46,18 +47,27 @@ function loadMemberList() {
             if (status && statusColors.hasOwnProperty(status)) {
                 status = '<span class="' + statusColors[status] + '">' + status + "</span>";
             }
+            // generate a new row for the table
             $row = $('<tr id="tb-row-' + i + '">' +
                 '<td>' + mem[i].first_name + '</td>' +
                 '<td>' + mem[i].last_name + '</td>' +
                 '<td>' + classYears[mem[i].year] + '</td>' +
                 '<td>' + level + '</td>' +
                 '<td>' + status + '</td>' +
-                '<td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><tr>'
+                '<td><a class="edit-member" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>' +
+                '<a class="remove-member" href="#"><span class="glyphicon glyphicon-trash"></span></td><tr>'
             );
-            $row.find('a').data(mem[i]);
-            $row.find('a').on('click', function(event) {
+            // store the JSON data with the edit and delete buttons
+            $row.find('.edit-member').data(mem[i]);
+            $row.find('.remove-member').data(mem[i]);
+
+            // callback for edit button click
+            $row.find('.edit-member').on('click', function(event) {
+                // retrieve stored JSON data
                 var $target = $(event.delegateTarget);
                 var mem = $target.data();
+
+                // set the form to match the stored values
                 $('#add-mode').val('update');
                 $('#first-name').val(mem.first_name);
                 $('#last-name').val(mem.last_name);
@@ -70,8 +80,18 @@ function loadMemberList() {
                     $('input[name=level][value=ret]').prop('checked', true);
                 }
                 $('#status').val(mem.status);
+
+                // show the dialog box
                 $('#update-member-dialog').modal();
             });
+
+            // callback for delete button click
+            $row.find('.remove-member').on('click', function(event) {
+                var $target = $(event.delegateTarget);
+                $('#delete-member-dialog').data($target.data());
+            });
+
+            // add row to table
             $table.append($row);
         }
     }).fail(function(err) {
@@ -85,6 +105,7 @@ $(function() {
     loadMemberList();
 
     $('#btn-add-member').on('click', function(e) {
+        // clear and show form
         $('#add-mode').val('new');
         $('#first-name').val('');
         $('#last-name').val('');
@@ -94,6 +115,7 @@ $(function() {
         $('#update-member-form').submit()
     });
     $('#update-member-form').on('submit', function(event) {
+        // add a new member to the database
         event.preventDefault();
         $('#update-member-dialog').modal('hide');
         var mode = $('#add-mode').val();
@@ -110,6 +132,25 @@ $(function() {
             loadMemberList();
         }).fail(function(err) {
             console.log(err);
+        });
+    });
+    $('#btn-submit-del').on('click', function (event) {
+        var mem = $('#delete-member-dialog').data();
+        if (!mem || !mem.hasOwnProperty('first_name') || !mem.hasOwnProperty('last_name')) {
+            console.log('invalid delete');
+            return;
+        }
+
+        $.post('api/update_member.php', {
+            mode: 'delete',
+            first_name: mem.first_name,
+            last_name: mem.last_name
+        }).done(function() {
+            console.log('delete success');
+            $('#delete-member-dialog').data({});
+            loadMemberList();
+        }).fail(function() {
+            console.log('delete failed');
         });
     });
 });

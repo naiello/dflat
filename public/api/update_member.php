@@ -12,15 +12,15 @@ if ($db->connect_error) {
 
 $first = $_POST["first_name"];
 $last = $_POST["last_name"];
-$section = $_POST["section"];
-$year = $_POST["year"];
+$section = (empty($_POST["section"])) ? "" : $_POST["section"];
+$year = (empty($_POST["year"])) ? "" : $_POST["year"];
 $core = "";
 $new_member = "";
 if (!empty($_POST["level"])) {
     $core = ($_POST["level"] === "core") ? "Y" : "";
     $new_member = ($_POST["level"] === "new") ? "Y" : "";
 }
-$status = $_POST["status"];
+$status = (empty($_POST["status"])) ? "" : $_POST["status"];
 
 if ($_POST["mode"] == "new") {
     $sql = $db->prepare("INSERT INTO band_members VALUES (?, ?, ?, ?, ?, ?, ?);");
