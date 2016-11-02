@@ -53,7 +53,8 @@ function loadMemberList() {
                 '<td>' + level + '</td>' +
                 '<td>' + status + '</td>' +
                 '<td><a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td><tr>'
-            ).find('a').data(mem[i]).on('click', function (event) {
+            );
+			$row.find('a').data(mem[i]).on('click', function (event) {
 				var $target = $(event.target);
 				var mem = $target.data();
 				$('#add-mode').val('update');
