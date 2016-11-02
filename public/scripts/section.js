@@ -32,7 +32,7 @@ function loadMemberList() {
             Inactive: 'text-warn'
         }
 
-        $table = $('table tbody');
+        $table = $('table tbody').html('');
         var level = "Returning";
         var status;
 		var $row;
@@ -93,6 +93,7 @@ $(function() {
     $('#btn-submit').on('click', () => { $('#update-member-form').submit() });
     $('#update-member-form').on('submit', function(event) {
         event.preventDefault();
+		$('#update-member-dialog').modal('hide');
         var mode = $('#add-mode').val();
         $.post('api/update_member.php', {
             mode: $('#add-mode').val(),
@@ -104,6 +105,7 @@ $(function() {
             year: parseInt($('#year option:selected').val())
         }).done(function(result) {
             console.log(result);
+			loadMemberList();
         }).fail(function(err) {
             console.log(err);
         });
