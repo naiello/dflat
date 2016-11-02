@@ -1,6 +1,6 @@
 $(function() {
     $.get({
-        url: '../api/section.php',
+        url: 'api/section.php',
         data: {
             s: 'Falto'
         }
