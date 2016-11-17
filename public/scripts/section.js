@@ -108,6 +108,14 @@ function loadMemberList() {
 }
 
 $(function() {
+    if ($.urlParam('s') === undefined) {
+        $('.main').hide();
+        var $dialog = $('#choose-section-dialog');
+        $dialog.modal();
+        $dialog.on('hide.bs.modal', function() {
+            window.location.assign(window.location.href + "?s=" + $('#pick-section option:selected').val());
+        });
+    }
     loadMemberList();
 
     $('#btn-add-member').on('click', function(e) {
