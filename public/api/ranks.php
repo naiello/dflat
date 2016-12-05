@@ -18,20 +18,21 @@ $roster_sql = <<<EOF
         a.first_name = b.first_name AND a.last_name = b.last_name
     WHERE b.section = ?;
 EOF;
-$ranks_sql = 'SELECT rank, alternate AS has_alt FROM ranks WHERE section = ?;'
+$ranks_sql = 'SELECT rank, alternate AS has_alt FROM ranks WHERE section = ?;';
 
 $roster_query = $db->prepare($roster_sql);
-$ranks_query = $db->prepare($ranks_sql);
-
-$roster_query.bind_param('s', $section);
-$ranks_query.bind_param('s', $section);
-
+$roster_query->bind_param('s', $section);
 $roster_result = $roster_query->execute();
+$roster_arr = $roster_query->get_result()->fetch_all(MYSQLI_ASSOC);
+
+$ranks_query = $db->prepare($ranks_sql);
+$ranks_query->bind_param('s', $section);
 $ranks_result = $ranks_query->execute();
+$ranks_arr = $ranks_query->get_results()->fetch_all(MYSQLI_ASSOC);
 
 $result = array(
-    'roster' => $roster_result,
-    'ranks' => $ranks_result
+    'roster' => $roster_arr,
+    'ranks' => $ranks_arr
 );
 
 header('Content-Type: application/json');
