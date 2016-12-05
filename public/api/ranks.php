@@ -28,7 +28,7 @@ $roster_arr = $roster_query->get_result()->fetch_all(MYSQLI_ASSOC);
 $ranks_query = $db->prepare($ranks_sql);
 $ranks_query->bind_param('s', $section);
 $ranks_result = $ranks_query->execute();
-$ranks_arr = $ranks_query->get_results()->fetch_all(MYSQLI_ASSOC);
+$ranks_arr = $ranks_query->get_result()->fetch_all(MYSQLI_ASSOC);
 
 $result = array(
     'roster' => $roster_arr,
