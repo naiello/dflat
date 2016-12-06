@@ -1,0 +1,17 @@
+@import url('theme.css');
+
+.section-name-header {
+    font-size: 48pt;
+}
+
+.img-header {
+    background: url('../images/irishguard.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.alert {
+    display: none;
+}
