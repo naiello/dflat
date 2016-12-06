@@ -2,7 +2,8 @@ function getSectionRoster(callback) {
     // retrieve rank listing from server
     // server returns JSON array of objects
     $.get('api/ranks.php', {
-        s: 'Falto', // HACK
+        a: 'roster',
+        s: 'Falto' // HACK
     }).done(function(listing) {
         console.log(listing);
         if (callback) {
@@ -13,8 +14,32 @@ function getSectionRoster(callback) {
     });
 }
 
-function assignRanks(roster, ranks) {
-    
+function getSavedRanks(section, show, callback) {
+    $.get('api/ranks.php', {
+        a: 'load',
+        s: 'Falto', // HACK
+        show: 'MSU'
+    }).done(function(listing) {
+        console.log(listing);
+        if (callback) {
+            callback(listing);
+        }
+    }).fail(function(err) {
+        console.log(err);
+    });
+}
+
+function getShows(callback) {
+    $.get('api/ranks.php', {
+        a: 'shows',
+    }).done(function(listing) {
+        console.log(listing);
+        if (callback) {
+            callback(listing);
+        }
+    }).fail(function(err) {
+        console.log(err);
+    });
 }
 
 $(function() {

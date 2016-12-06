@@ -2,6 +2,7 @@
 
 include('config.php');
 $section = $_GET['s'];
+$action = $_GET['a'];
 // SQL to retrieve listing of members in section and core/alt information
 $roster_sql = <<<EOF
     SELECT  b.first_name AS first_name,
@@ -19,21 +20,49 @@ $roster_sql = <<<EOF
     WHERE b.section = ?;
 EOF;
 $ranks_sql = 'SELECT rank, alternate AS has_alt FROM ranks WHERE section = ?;';
+$shows_sql = 'SELECT DISTINCT showname FROM saved_ranks';
+$load_sql = 'SELECT * FROM saved_ranks INNER JOIN ranks ON saved_ranks.rank = ranks.rank WHERE showname = ? and section = ?';
+$update_sql = 'UPDATE saved_ranks SET a_first = ?, a_last = ?, b_first = ?, b_last = ?, c_first = ?, c_last = ?, d_first = ?, d_last = ? WHERE rank = ? and show = ?;';
 
-$roster_query = $db->prepare($roster_sql);
-$roster_query->bind_param('s', $section);
-$roster_result = $roster_query->execute();
-$roster_arr = $roster_query->get_result()->fetch_all(MYSQLI_ASSOC);
+if ($action == 'roster') {
+    $roster_query = $db->prepare($roster_sql);
+    $roster_query->bind_param('s', $section);
+    $roster_result = $roster_query->execute();
+    $roster_arr = $roster_query->get_result()->fetch_all(MYSQLI_ASSOC);
 
-$ranks_query = $db->prepare($ranks_sql);
-$ranks_query->bind_param('s', $section);
-$ranks_result = $ranks_query->execute();
-$ranks_arr = $ranks_query->get_result()->fetch_all(MYSQLI_ASSOC);
-
-$result = array(
-    'roster' => $roster_arr,
-    'ranks' => $ranks_arr
-);
+    $ranks_query = $db->prepare($ranks_sql);
+    $ranks_query->bind_param('s', $section);
+    $ranks_result = $ranks_query->execute();
+    $ranks_arr = $ranks_query->get_result()->fetch_all(MYSQLI_ASSOC);
+    $result = array(
+        'roster' => $roster_arr,
+        'ranks' => $ranks_arr
+    );
+} elseif ($action == 'shows') {
+    $show_query = $db->prepare($shows_sql);
+    $show_result = $show_query->execute();
+    $result = $show_query->get_result()->fetch_array();
+} elseif ($action == 'load') {
+    $show = $_GET['show'];
+    $show_query = $db->prepare($load_sql);
+    $show_query->bind_param('ss', $show, $section);
+    $show_query->execute();
+    $result = $show_query->get_result()->fetch_assoc();
+}
+elseif ($action == 'update') {
+    $show = $_GET['show'];
+    $ranks = json_decode($_GET['ranks']);
+    $update_query = $db->prepare($update_sql);
+    foreach ($ranks as $rank) {
+        $update_query->bind_param('ssssssss', $rank['a_first'], $rank['a_last'],
+                $rank['b_first'], $rank['b_last'],
+                $rank['c_first'], $rank['c_last'],
+                $rank['d_first'], $rank['d_last'],
+                $rank['id'], $show);
+        $update_query->execute();
+        $update_query->get_result();
+    }
+}
 
 header('Content-Type: application/json');
 echo json_encode($result);
