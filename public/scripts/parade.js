@@ -11,9 +11,8 @@ function loadRanks() {
 	$.get({
 		url: 'api/ranks.php',
 		data: {
-			a: 'load',
-			show: 'MSU',
-			s: 'Falto'
+			a: 'loadAll',
+			show: 'MSU'
 		}
 	}).done(function(ranks) {
 		if(!Array.isArray(ranks)) {
