@@ -1,7 +1,6 @@
 <?php
 
 include('config.php');
-$section = $_GET['s'];
 $action = $_GET['a'];
 // SQL to retrieve listing of members in section and core/alt information
 $roster_sql = <<<EOF
@@ -25,6 +24,7 @@ $load_sql = 'SELECT * FROM saved_ranks INNER JOIN ranks ON saved_ranks.rank = ra
 $update_sql = 'UPDATE saved_ranks SET a_first = ?, a_last = ?, b_first = ?, b_last = ?, c_first = ?, c_last = ?, d_first = ?, d_last = ? WHERE rank = ? and show = ?;';
 
 if ($action == 'roster') {
+    $section = $_GET['s'];
     $roster_query = $db->prepare($roster_sql);
     $roster_query->bind_param('s', $section);
     $roster_result = $roster_query->execute();
@@ -41,15 +41,16 @@ if ($action == 'roster') {
 } elseif ($action == 'shows') {
     $show_query = $db->prepare($shows_sql);
     $show_result = $show_query->execute();
-    $result = $show_query->get_result()->fetch_array();
+    $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
 } elseif ($action == 'load') {
+    $section = $_GET['s'];
     $show = $_GET['show'];
     $show_query = $db->prepare($load_sql);
     $show_query->bind_param('ss', $show, $section);
     $show_query->execute();
-    $result = $show_query->get_result()->fetch_assoc();
-}
-elseif ($action == 'update') {
+    $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
+} elseif ($action == 'update') {
+    $section = $_GET['s'];
     $show = $_GET['show'];
     $ranks = json_decode($_GET['ranks']);
     $update_query = $db->prepare($update_sql);

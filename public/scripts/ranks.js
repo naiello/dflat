@@ -17,8 +17,8 @@ function getSectionRoster(callback) {
 function getSavedRanks(section, show, callback) {
     $.get('api/ranks.php', {
         a: 'load',
-        s: 'Falto', // HACK
-        show: 'MSU'
+        s: section,
+        show: show
     }).done(function(listing) {
         console.log(listing);
         if (callback) {
@@ -31,7 +31,7 @@ function getSavedRanks(section, show, callback) {
 
 function getShows(callback) {
     $.get('api/ranks.php', {
-        a: 'shows',
+        a: 'shows'
     }).done(function(listing) {
         console.log(listing);
         if (callback) {
