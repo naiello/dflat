@@ -1,14 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "naiello";
-$password = "correcthorsebatterystaple";
-$dbname = "db";
-
-$db = new mysqli($servername, $username, $password, $dbname);
-
-if ($db->connect_error) {
-    die("Connection failed: " . $db->connect_error);
-}
+include('config.php');
 
 $sql = "SELECT * FROM band_members WHERE section = '" . $_GET["s"] . "' ORDER BY year DESC, last_name;";
 $result = $db->query($sql);

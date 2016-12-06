@@ -1,0 +1,44 @@
+@import url('theme.css');
+
+.section-name-header {
+    font-size: 48pt;
+}
+
+.img-header {
+    background: url('../images/sub-cover-2.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+tbody td {
+    width: 256px;
+    height: 64px;
+}
+
+tbody td {
+    cursor: grab;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+tbody td:hover {
+    background-color: #F5F5F5 !important;
+}
+
+tbody td:active, tbody td.hovering {
+    background-color: #E5E5E5 !important;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+}
+
+.alert {
+    display: none;
+}
