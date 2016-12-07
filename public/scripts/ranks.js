@@ -64,8 +64,11 @@ function generateNewRanks(roster, ranks) {
     var returners = [];
     var newmem = [];
 
+    var $table = $('table tbody');
+    $table.html('');
+
     var shuffle = function (arr) {
-        for (int i = 0; i < arr.length; i++) {
+        for (var i = 0; i < arr.length; i++) {
             var j = Math.floor(Math.random() * arr.length);
             var temp = arr[i];
             arr[i] = arr[j];
@@ -74,9 +77,9 @@ function generateNewRanks(roster, ranks) {
     }
 
     var pickCore = function() {
-        if (!core.empty()) {
+        if (core.length > 0) {
             return core.pop();
-        } else if (!returners.empty()) {
+        } else if (returners.length > 0) {
             return returners.pop();
         } else {
             return newmem.pop();
@@ -84,9 +87,9 @@ function generateNewRanks(roster, ranks) {
     }
 
     var pickMid = function() {
-        if (!newmem.empty()) {
+        if (newmem.length > 0) {
             return newmem.pop();
-        } else if (!returners.empty()) {
+        } else if (returners.length > 0) {
             return returners.pop();
         } else {
             return newmem.pop();
@@ -117,13 +120,13 @@ function generateNewRanks(roster, ranks) {
         var dSpot = pickCore();
 
         rankAssignments[n] = RankAssignment(aSpot, bSpot, cSpot, dSpot);
-        $row = $('<tr id="row-'+r+'"><th scope="row">'+n+'</th>' +
-                '<td id="cell-'+r+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
-                '<td id="cell-'+r+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
-                '<td id="cell-'+r+'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
-                '<td id="cell-'+r+'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
+        $row = $('<tr id="row-'+n+'"><th scope="row">'+n+'</th>' +
+                '<td id="cell-'+n+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
+                '<td id="cell-'+n+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
+                '<td id="cell-'+n+'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
+                '<td id="cell-'+n+'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
 
-        $('table tbody').append($row);
+        $table.append($row);
     });
 }
 
