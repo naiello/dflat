@@ -1,5 +1,6 @@
 var rankAssignments = {};
 var fullRoster = [];
+var rankNumbers = [];
 
 function getSectionRoster(callback) {
     // retrieve rank listing from server
@@ -61,14 +62,14 @@ function RankAssignment(num, a, b, c, d) {
     this.B = b;
     this.C = c;
     this.D = d;
-    this.generateServerJSON() {
+    this.generateServerJSON = function() {
         return {
             a_first: this.A.firstName,
             a_last: this.A.lastName,
             b_first: this.B.firstName,
             b_last: this.B.lastName,
             c_first: this.C.firstName,
-            c_last: this.C.lastName
+            c_last: this.C.lastName,
             d_first: this.D.firstName,
             d_last: this.D.lastName,
             number: this.number
@@ -137,6 +138,7 @@ function generateNewRanks(roster, ranks) {
         var dSpot = pickCore();
 
         rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
+        rankNumbers.push(n);
         $row = $('<tr id="row-'+n+'"><th scope="row">'+n+'</th>' +
                 '<td id="cell-'+n+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
                 '<td id="cell-'+n+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
@@ -151,7 +153,8 @@ function generateNewRanks(roster, ranks) {
 
 function saveNew() {
     var ranks = [];
-    rankAssignments.forEach(function(rank) {
+    rankNumbers.forEach(function(r) {
+	var rank = rankAssignments[r];
         var row = rank.generateServerJSON();
         ranks.push(row);
         console.log(row);
@@ -161,7 +164,7 @@ function saveNew() {
         a: 'savenew',
         s: 'Trombone',
         show: 'MSU',
-        ranks: json.stringify(ranks)
+        ranks: JSON.stringify(ranks)
     }).done(function(result) {
         console.log(result);
     }).fail(function(err) {
