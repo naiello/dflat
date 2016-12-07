@@ -228,7 +228,7 @@ $(function() {
         getShows(function(shows) {
             var $sel = $('#pick-show');
             shows.forEach(function (show) {
-                $sel.append('<option value="'+show+'">'+show+'</option>');
+                $sel.append('<option value="'+show.showname+'">'+show.showname+'</option>');
             });
         });
 
@@ -241,5 +241,7 @@ $(function() {
     } else {
         sectionName = $.urlParam('s');
         showName = $.urlParam('show');
+        $('.section-name-header').html(sectionName);
+        $('.show-name-header').html(sectionName);
     }
 });
