@@ -14,7 +14,7 @@ function getSectionRoster(callback) {
     // server returns JSON array of objects
     $.get('api/ranks.php', {
         a: 'roster',
-        s: 'Trombone' // HACK
+        s: sectionName // HACK
     }).done(function(listing) {
         console.log(listing);
         if (callback) {
@@ -242,6 +242,6 @@ $(function() {
         sectionName = $.urlParam('s');
         showName = $.urlParam('show');
         $('.section-name-header').html(sectionName);
-        $('.show-name-header').html(sectionName);
+        $('.show-name-header').html(showName);
     }
 });
