@@ -133,6 +133,8 @@ function generateNewRanks(roster, ranks) {
 }
 
 function setDragAndDrop() {
+    var $tds = $('tbody td');
+    var $dragStart = undefined;
     // drag/drop of ranks
     $tds.attr('draggable', true)
         .bind('dragenter', function(evt) {
@@ -173,8 +175,6 @@ function setDragAndDrop() {
 }
 
 $(function() {
-    var $tds = $('tbody td');
-    var $dragStart = undefined;
 
     getSectionRoster(generateNewRanks);
 });
