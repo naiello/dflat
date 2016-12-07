@@ -222,7 +222,6 @@ function setDragAndDrop() {
 }
 
 $(function() {
-    getSectionRoster(generateNewRanks);
 
     if ($.urlParam('s') === undefined) {
         getShows(function(shows) {
@@ -243,5 +242,6 @@ $(function() {
         showName = $.urlParam('show');
         $('.section-name-header').html(sectionName);
         $('.show-name-header').html(showName);
+        getSectionRoster(generateNewRanks);
     }
 });
