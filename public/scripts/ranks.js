@@ -128,14 +128,11 @@ function generateNewRanks(roster, ranks) {
 
         $table.append($row);
     });
+
+    setDragAndDrop();
 }
 
-$(function() {
-    var $tds = $('tbody td');
-    var $dragStart = undefined;
-
-    getSectionRoster(generateNewRanks);
-
+function setDragAndDrop() {
     // drag/drop of ranks
     $tds.attr('draggable', true)
         .bind('dragenter', function(evt) {
@@ -173,4 +170,11 @@ $(function() {
                 count++;
             }, 10);
         });
+}
+
+$(function() {
+    var $tds = $('tbody td');
+    var $dragStart = undefined;
+
+    getSectionRoster(generateNewRanks);
 });
