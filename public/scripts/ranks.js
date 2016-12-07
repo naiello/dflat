@@ -1,6 +1,13 @@
 var rankAssignments = {};
 var fullRoster = [];
 var rankNumbers = [];
+var sectionName;
+var showName;
+
+$.urlParam = function(name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return (Array.isArray(results)) ? results[1] : undefined;
+}
 
 function getSectionRoster(callback) {
     // retrieve rank listing from server
@@ -18,11 +25,11 @@ function getSectionRoster(callback) {
     });
 }
 
-function getSavedRanks(section, show, callback) {
+function getSavedRanks(callback) {
     $.get('api/ranks.php', {
         a: 'load',
-        s: section,
-        show: show
+        s: sectionName,
+        show: showName
     }).done(function(listing) {
         console.log(listing);
         if (callback) {
@@ -162,8 +169,8 @@ function saveNew() {
 
     $.get('api/ranks.php', {
         a: 'savenew',
-        s: 'Trombone',
-        show: 'MSU',
+        s: sectionName,
+        show: showName,
         ranks: JSON.stringify(ranks)
     }).done(function(result) {
         console.log(result);
@@ -215,6 +222,24 @@ function setDragAndDrop() {
 }
 
 $(function() {
-
     getSectionRoster(generateNewRanks);
+
+    if ($.urlParam('s') === undefined) {
+        getShows(function(shows) {
+            var $sel = $('#pick-show');
+            shows.forEach(function (show) {
+                $sel.append('<option value="'+show+'">'+show+'</option>');
+            });
+        });
+
+        $('.main').hide();
+        var $dialog = $('#choose-section-dialog');
+        $dialog.modal();
+        $dialog.on('hide.bs.modal', function() {
+            window.location.assign(window.location.href + "?s=" + $('#pick-section option:selected').val() + '&show=' + $('#pick-show option:selected').val());
+        });
+    } else {
+        sectionName = $.urlParam('s');
+        showName = $.urlParam('show');
+    }
 });
