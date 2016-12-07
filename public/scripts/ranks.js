@@ -55,8 +55,25 @@ function BandMember(first, last, core, newm, times_core, times_ht, times_pre) {
     this.timesPre = times_pre || 0;
 }
 
-function RankAssignment(a, b, c, d) {
-    return {A: a, B: b, C: c, D: d};
+function RankAssignment(num, a, b, c, d) {
+    this.number = num;
+    this.A = a;
+    this.B = b;
+    this.C = c;
+    this.D = d;
+    this.generateServerJSON() {
+        return {
+            a_first: this.A.firstName,
+            a_last: this.A.lastName,
+            b_first: this.B.firstName,
+            b_last: this.B.lastName,
+            c_first: this.C.firstName,
+            c_last: this.C.lastName
+            d_first: this.D.firstName,
+            d_last: this.D.lastName,
+            number: this.number
+        };
+    }
 }
 
 function generateNewRanks(roster, ranks) {
@@ -119,7 +136,7 @@ function generateNewRanks(roster, ranks) {
         var cSpot = pickMid();
         var dSpot = pickCore();
 
-        rankAssignments[n] = RankAssignment(aSpot, bSpot, cSpot, dSpot);
+        rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
         $row = $('<tr id="row-'+n+'"><th scope="row">'+n+'</th>' +
                 '<td id="cell-'+n+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
                 '<td id="cell-'+n+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
@@ -130,6 +147,26 @@ function generateNewRanks(roster, ranks) {
     });
 
     setDragAndDrop();
+}
+
+function saveNew() {
+    var ranks = [];
+    rankAssignments.forEach(function(rank) {
+        var row = rank.generateServerJSON();
+        ranks.push(row);
+        console.log(row);
+    });
+
+    $.get('api/ranks.php', {
+        a: 'savenew',
+        s: 'Trombone',
+        show: 'MSU',
+        ranks: json.stringify(ranks)
+    }).done(function(result) {
+        console.log(result);
+    }).fail(function(err) {
+        console.log(err);
+    });
 }
 
 function setDragAndDrop() {

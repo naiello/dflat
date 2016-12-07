@@ -18,10 +18,11 @@ $roster_sql = <<<EOF
         a.first_name = b.first_name AND a.last_name = b.last_name
     WHERE b.section = ?;
 EOF;
-$ranks_sql = 'SELECT rank, alternate AS has_alt FROM ranks WHERE section = ?;';
+$ranks_sql = 'SELECT rank, alternate AS has_alt FROM renumbered WHERE section = ?;';
 $shows_sql = 'SELECT DISTINCT showname FROM saved_ranks';
-$load_sql = 'SELECT * FROM saved_ranks INNER JOIN ranks ON saved_ranks.rank = ranks.rank WHERE showname = ? and section = ?';
-$update_sql = 'UPDATE saved_ranks SET a_first = ?, a_last = ?, b_first = ?, b_last = ?, c_first = ?, c_last = ?, d_first = ?, d_last = ? WHERE rank = ? and show = ?;';
+$load_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ? and section = ?';
+$ins_sql = 'INSERT INTO saved_ranks (a_first, a_last, b_first, b_last, c_first, c_last, d_first, d_last, rank, showname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+$update_sql = 'UPDATE saved_ranks SET a_first = ?, a_last = ?, b_first = ?, b_last = ?, c_first = ?, c_last = ?, d_first = ?, d_last = ? WHERE rank = ? and showname = ?;';
 
 if ($action == 'roster') {
     $section = $_GET['s'];
@@ -55,14 +56,30 @@ if ($action == 'roster') {
     $ranks = json_decode($_GET['ranks']);
     $update_query = $db->prepare($update_sql);
     foreach ($ranks as $rank) {
-        $update_query->bind_param('ssssssss', $rank['a_first'], $rank['a_last'],
+        $update_query->bind_param('ssssssssss', $rank['a_first'], $rank['a_last'],
                 $rank['b_first'], $rank['b_last'],
                 $rank['c_first'], $rank['c_last'],
                 $rank['d_first'], $rank['d_last'],
-                $rank['id'], $show);
-        $update_query->execute();
+                $rank['number'], $show);
+        $success = $update_query->execute();
         $update_query->get_result();
     }
+    $result = array('success' => $success);
+} elseif ($action == 'savenew') {
+    $section = $_GET['s'];
+    $show = $_GET['show'];
+    $ranks = json_decode($_GET['ranks']);
+    $ins_query = $db->prepare($ins_sql);
+    foreach ($ranks as $rank) {
+        $ins_query->bind_param('ssssssssss', $rank['a_first'], $rank['a_last'],
+                $rank['b_first'], $rank['b_last'],
+                $rank['c_first'], $rank['c_last'],
+                $rank['d_first'], $rank['d_last'],
+                $rank['number'], $show);
+        $success = $ins_query->execute();
+        $ins_query->get_result();
+    }
+    $result = array('success' => $success);
 }
 
 header('Content-Type: application/json');
