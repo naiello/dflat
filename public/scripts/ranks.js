@@ -1,9 +1,12 @@
+var rankAssignments = {};
+var fullRoster = [];
+
 function getSectionRoster(callback) {
     // retrieve rank listing from server
     // server returns JSON array of objects
     $.get('api/ranks.php', {
         a: 'roster',
-        s: 'Falto' // HACK
+        s: 'Trombone' // HACK
     }).done(function(listing) {
         console.log(listing);
         if (callback) {
@@ -42,9 +45,93 @@ function getShows(callback) {
     });
 }
 
+function BandMember(first, last, core, newm, times_core, times_ht, times_pre) {
+    this.firstName = first;
+    this.lastName = last;
+    this.core = (core === 'Y');
+    this.newMember = (newm === 'Y');
+    this.timesCore = times_core;
+    this.timesHT = times_ht || 0;
+    this.timesPre = times_pre || 0;
+}
+
+function RankAssignment(a, b, c, d) {
+    return {A: a, B: b, C: c, D: d};
+}
+
+function generateNewRanks(roster, ranks) {
+    var core = [];
+    var returners = [];
+    var newmem = [];
+
+    var shuffle = function (arr) {
+        for (int i = 0; i < arr.length; i++) {
+            var j = Math.floor(Math.random() * arr.length);
+            var temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    var pickCore = function() {
+        if (!core.empty()) {
+            return core.pop();
+        } else if (!returners.empty()) {
+            return returners.pop();
+        } else {
+            return newmem.pop();
+        }
+    }
+
+    var pickMid = function() {
+        if (!newmem.empty()) {
+            return newmem.pop();
+        } else if (!returners.empty()) {
+            return returners.pop();
+        } else {
+            return newmem.pop();
+        }
+    }
+
+    roster.forEach(function(person) {
+        var mem = new BandMember(person.first_name, person.last_name, person.is_core, person.is_new_member, person.times_ht_alt, person.times_pre_alt);
+        fullRoster.push(mem);
+        if (mem.core) {
+            core.push(mem);
+        } else if (mem.newMember) {
+            newmem.push(mem);
+        } else {
+            returners.push(mem);
+        }
+    });
+
+    shuffle(core);
+    shuffle(returners);
+    shuffle(newmem);
+
+    ranks.forEach(function(rank) {
+        var n = rank.rank;
+        var aSpot = pickCore();
+        var bSpot = pickMid();
+        var cSpot = pickMid();
+        var dSpot = pickCore();
+
+        rankAssignments[n] = RankAssignment(aSpot, bSpot, cSpot, dSpot);
+        $row = $('<tr id="row-'+r+'"><th scope="row">'+n+'</th>' +
+                '<td id="cell-'+r+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
+                '<td id="cell-'+r+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
+                '<td id="cell-'+r+'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
+                '<td id="cell-'+r+'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
+
+        $('table tbody').append($row);
+    });
+}
+
 $(function() {
     var $tds = $('tbody td');
     var $dragStart = undefined;
+
+    getSectionRoster(generateNewRanks);
 
     // drag/drop of ranks
     $tds.attr('draggable', true)
