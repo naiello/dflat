@@ -40,17 +40,22 @@ function getSavedRanks(callback) {
     });
 }
 
-function getShows(callback) {
-    $.get('api/ranks.php', {
+function getShows(section, callback) {
+    var args = {
         a: 'shows'
-    }).done(function(listing) {
-        console.log(listing);
-        if (callback) {
-            callback(listing);
-        }
-    }).fail(function(err) {
-        console.log(err);
-    });
+    };
+    if (section) {
+        args.s = section;
+    }
+    $.get('api/ranks.php', args)
+        .done(function(listing) {
+            console.log(listing);
+            if (callback) {
+                callback(listing);
+            }
+        }).fail(function(err) {
+            console.log(err);
+        });
 }
 
 function BandMember(first, last, core, newm, times_core, times_ht, times_pre) {
@@ -92,7 +97,7 @@ function generateNewRanks(roster, ranks) {
     var $table = $('table tbody');
     $table.html('');
 
-    var shuffle = function (arr) {
+    var shuffle = function(arr) {
         for (var i = 0; i < arr.length; i++) {
             var j = Math.floor(Math.random() * arr.length);
             var temp = arr[i];
@@ -146,11 +151,11 @@ function generateNewRanks(roster, ranks) {
 
         rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
         rankNumbers.push(n);
-        $row = $('<tr id="row-'+n+'"><th scope="row">'+n+'</th>' +
-                '<td id="cell-'+n+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
-                '<td id="cell-'+n+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
-                '<td id="cell-'+n+'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
-                '<td id="cell-'+n+'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
+        $row = $('<tr id="row-' + n + '"><th scope="row">' + n + '</th>' +
+            '<td id="cell-' + n + 'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
+            '<td id="cell-' + n + 'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
+            '<td id="cell-' + n + 'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
+            '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
 
         $table.append($row);
     });
@@ -161,7 +166,7 @@ function generateNewRanks(roster, ranks) {
 function saveNew() {
     var ranks = [];
     rankNumbers.forEach(function(r) {
-	var rank = rankAssignments[r];
+        var rank = rankAssignments[r];
         var row = rank.generateServerJSON();
         ranks.push(row);
         console.log(row);
@@ -189,7 +194,7 @@ function setDragAndDrop() {
         }).bind('dragover', function(evt) {
             evt.preventDefault();
             $(evt.delegateTarget).addClass('hovering');
-        }).bind('dragstart', function (evt) {
+        }).bind('dragstart', function(evt) {
             $dragStart = $(evt.delegateTarget);
         }).bind('dragleave', function(evt) {
             evt.preventDefault();
@@ -214,20 +219,33 @@ function setDragAndDrop() {
                 }
 
                 var gr = 210 + count;
-                $target.css('background-color', 'rgb('+gr+', '+gr+', 255)');
-                $dragStart.css('background-color', 'rgb('+gr+', '+gr+', 255)');
+                $target.css('background-color', 'rgb(' + gr + ', ' + gr + ', 255)');
+                $dragStart.css('background-color', 'rgb(' + gr + ', ' + gr + ', 255)');
                 count++;
             }, 10);
         });
 }
 
 $(function() {
+    var newShow = false;
+
+    $('#btn-new-show-add').on('click', function() {
+        $('#group-new-show').show();
+        $('#group-current-shows').hide();
+        newShow = true;
+    });
+
+    $('#btn-new-show-cancel').on('click', function() {
+        $('#group-new-show').show();
+        $('#group-current-shows').hide();
+        newShow = false;
+    });
 
     if ($.urlParam('s') === undefined) {
-        getShows(function(shows) {
+        getShows('', function(shows) {
             var $sel = $('#pick-show');
-            shows.forEach(function (show) {
-                $sel.append('<option value="'+show.showname+'">'+show.showname+'</option>');
+            shows.forEach(function(show) {
+                $sel.append('<option value="' + show.showname + '">' + show.showname + '</option>');
             });
         });
 
@@ -235,13 +253,29 @@ $(function() {
         var $dialog = $('#choose-section-dialog');
         $dialog.modal();
         $dialog.on('hide.bs.modal', function() {
-            window.location.assign(window.location.href + "?s=" + $('#pick-section option:selected').val() + '&show=' + $('#pick-show option:selected').val());
+            var showName = (newShow) ? $('#inp-new-show-name').val() : $('#pick-show option:selected').val();
+            window.location.assign(window.location.href + "?s=" + $('#pick-section option:selected').val(); + '&show=' + showName);
         });
     } else {
         sectionName = $.urlParam('s');
         showName = $.urlParam('show');
         $('.section-name-header').html(sectionName);
         $('.show-name-header').html(showName);
-        getSectionRoster(generateNewRanks);
+
+        getShows(sectionName, function(shows) {
+            var newRanks = true;
+            shows.forEach(function(show) {
+                if (show === showName) {
+                    newRanks = false;
+                }
+            });
+
+            if (newRanks) {
+                getSectionRoster(generateNewRanks);
+                saveNew();
+            } else {
+                getSavedRanks(function(ranks) { console.log(ranks); });
+            }
+        });
     }
 });

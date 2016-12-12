@@ -42,3 +42,7 @@ tbody td:active, tbody td.hovering {
 .alert {
     display: none;
 }
+
+#group-new-show {
+    display: none;
+}

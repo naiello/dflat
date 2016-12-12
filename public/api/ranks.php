@@ -21,6 +21,7 @@ $roster_sql = <<<EOF
 EOF;
 $ranks_sql = 'SELECT rank, alternate AS has_alt FROM renumbered WHERE section = ?;';
 $shows_sql = 'SELECT DISTINCT showname FROM saved_ranks;';
+$shows_filt_sql = 'SELECT DISTINCT showname FROM saved_ranks WHERE section = ?;';
 $load_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ? and section = ?;';
 $load_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ?;';
 $ins_sql = 'INSERT INTO saved_ranks (a_first, a_last, b_first, b_last, c_first, c_last, d_first, d_last, rank, showname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
@@ -43,7 +44,12 @@ if ($action == 'roster') {
         'ranks' => $ranks_arr
     );
 } elseif ($action == 'shows') {
-    $show_query = $db->prepare($shows_sql);
+    if (array_key_exists('s', $_GET)) {
+        $show_query = $db->prepare($shows_filt_sql);
+        $show_query->bind_param('s', $_GET['s']);
+    } else {
+        $show_query = $db->prepare($shows_sql);
+    }
     $show_result = $show_query->execute();
     $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
 } elseif ($action == 'load') {

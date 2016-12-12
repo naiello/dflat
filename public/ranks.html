@@ -82,8 +82,15 @@
                         <option value="Bass">Bass</option>
                         <option value="Drumline">Drumline</option>
                     </select>
-                    <select id="pick-show">
-                    </select>
+                    <div id="group-current-shows">
+                        <select id="pick-show">
+                        </select>
+                        <button id="btn-new-show-add" class="btn btn-default"><span class="glyphicon glyphicon-plus">New Show</span></button>
+                    </div>
+                    <div id="group-new-show">
+                        <input id="inp-new-show-name" value="" type="text" />
+                        <button id="btn-new-show-cancel" class="btn btn-default">Cancel</button>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default">Select</button>
