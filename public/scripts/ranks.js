@@ -254,7 +254,7 @@ $(function() {
         $dialog.modal();
         $dialog.on('hide.bs.modal', function() {
             var showName = (newShow) ? $('#inp-new-show-name').val() : $('#pick-show option:selected').val();
-            window.location.assign(window.location.href + "?s=" + $('#pick-section option:selected').val(); + '&show=' + showName);
+            window.location.assign(window.location.href + "?s=" + $('#pick-section option:selected').val() + '&show=' + showName);
         });
     } else {
         sectionName = $.urlParam('s');
@@ -264,11 +264,11 @@ $(function() {
 
         getShows(sectionName, function(shows) {
             var newRanks = true;
-            shows.forEach(function(show) {
-                if (show === showName) {
+            for (var i = 0; i < shows.length; i++) {
+                if (shows[i].showname === showName) {
                     newRanks = false;
                 }
-            });
+            }
 
             if (newRanks) {
                 getSectionRoster(generateNewRanks);
