@@ -324,7 +324,7 @@ $(function() {
         newShow = false;
     });
 
-    if ($.urlParam('s') === undefined) {
+    if (!$.urlParam('s') || !$.urlParam('show')) {
         getShows('', function(shows) {
             var $sel = $('#pick-show');
             shows.forEach(function(show) {
@@ -332,11 +332,41 @@ $(function() {
             });
         });
 
-        $('.main').hide();
-        var $dialog = $('#choose-section-dialog');
-        $dialog.modal();
-        $dialog.on('hide.bs.modal', function() {
+        $('#pick-show, #pick-section').on('change', function () {
+            if (newShow) {
+                $('#do-ranks-exist').html('New ranks will be generated.');
+                return;
+            }
+            $.get('api/ranks.php', {
+                a: 'shows',
+                s: $('#pick-section option:selected').val()
+            }).done(function(result) {
+                var found = false;
+                var curShow = $('#pick-show option:selected').val();
+                result.forEach(function(show) {
+                    if (show.showname === curShow) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    $('#do-ranks-exist').html('');
+                } else {
+                    $('#do-ranks-exist').html('New ranks will be generated.');
+                }
+            });
+        });
+
+
+        $('#table-content').hide();
+        var $form = $('#form-choose-ranks');
+        $form.show();
+        $form.on('submit', function() {
+            evt.preventDefault();
             var showName = (newShow) ? $('#inp-new-show-name').val() : $('#pick-show option:selected').val();
+            if (!showName) {
+                return;
+            }
             window.location.assign(window.location.href + "?s=" + $('#pick-section option:selected').val() + '&show=' + showName);
         });
     } else {

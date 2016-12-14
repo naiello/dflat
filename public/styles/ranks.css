@@ -46,3 +46,8 @@ tbody td:active, tbody td.hovering {
 #group-new-show {
     display: none;
 }
+
+#form-choose-ranks {
+    display: hidden;
+    padding-left: 32px;
+}

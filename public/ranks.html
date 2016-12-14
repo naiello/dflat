@@ -37,16 +37,16 @@
     </header>
     <div class="main">
         <div class="container-fluid img-header">
-            <h1><span class="section-name-header">Trombone</span> Ranks</h1>
+            <h1><span class="section-name-header"></span> Ranks</h1>
         </div>
         <div class="alert alert-danger" id="error">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="msg"></span>
         </div>
-        <div class="container">
+        <div id="table-content" class="container">
             <h2 class="show-name-header"></h2>
             <p>
-                From here you can view/edit the show ranks for your section.  <a href="ranks.html">Click here</a> to view ranks for another section or show.
+                From here you can view/edit the show ranks for your section. <a href="ranks.html">Click here</a> to view ranks for another section or show.
             </p>
             <table class="table table-bordered">
                 <thead>
@@ -63,38 +63,37 @@
             </table>
         </div>
     </div>
-    <div id="choose-section-dialog" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h3>Choose Ranks</h3>
-                </div>
-                <div class="modal-body">
-                    <select id="pick-section">
-                        <option value="Piccolo">Piccolo</option>
-                        <option value="Clarinet">Clarinet</option>
-                        <option value="Saxophone">Saxophone</option>
-                        <option value="Trumpet">Trumpet</option>
-                        <option value="Falto">Falto</option>
-                        <option value="Trombone">Trombone</option>
-                        <option value="Baritone">Baritone</option>
-                    </select>
-                    <div id="group-current-shows">
-                        <select id="pick-show">
-                        </select>
-                        <button id="btn-new-show-add" class="btn btn-default"><span class="glyphicon glyphicon-plus">New Show</span></button>
-                    </div>
-                    <div id="group-new-show">
-                        <input id="inp-new-show-name" value="" type="text" />
-                        <button id="btn-new-show-cancel" class="btn btn-default">Cancel</button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-default">Select</button>
-                </div>
+    <div id="choose-section-dialog" class="container-fluid">
+        <h3>Choose Ranks</h3>
+        <p>
+            Select ranks to load. If no ranks exist for the given section
+            and show, new ones will be generated.
+        </p>
+        <form id="form-choose-ranks">
+            <label for="s">Section: </label>
+            <select name="s" id="pick-section">
+                <option value="Piccolo">Piccolo</option>
+                <option value="Clarinet">Clarinet</option>
+                <option value="Saxophone">Saxophone</option>
+                <option value="Trumpet">Trumpet</option>
+                <option value="Falto">Falto</option>
+                <option value="Trombone">Trombone</option>
+                <option value="Baritone">Baritone</option>
+            </select>
+            <div id="group-current-shows">
+                <label for="show">Show: </label>
+                <select name="show" id="pick-show"></select>
+                <button id="btn-new-show-add" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> New Show</button>
             </div>
-        </div>
+            <div id="group-new-show">
+                <label for="show">New Show Name:</label>
+                <input id="inp-new-show-name" value="" type="text" />
+                <button id="btn-new-show-cancel" class="btn btn-default">Cancel</button>
+            </div>
+            <br />
+            <p id="do-ranks-exist"></p>
+            <button class="btn btn-default">Submit</button>
+        </form>
     </div>
     <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
