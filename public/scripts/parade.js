@@ -36,7 +36,7 @@ function loadRanks() {
 			$table.append($row);
 			// insert drums and basses here
 			if(ranks[i+1].rank==36) {
-				// AJAX request
+				// Drums
 				$.get({
 					url: 'api/parade.php',
 					data: {
@@ -52,6 +52,7 @@ function loadRanks() {
 					for(var j = 0; j < snare.length; j=j+1) {
 						sn = sn + '<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>';
 					}
+					sn = sn + '</tr>';
 					$row = $(sn);
 					$table.append($row);
 				}).fail(function(err) {
@@ -72,6 +73,7 @@ function loadRanks() {
 					for(var j = 0; j < tenors.length; j=j+1) {
 						tn = tn + '<td>' + tenors[j].first_name + ' ' + tenors[j].last_name + '</td>';
 					}
+					tn = tn + '</tr>';
 					$row = $(tn);
 					$table.append($row);
 				}).fail(function(err) {
@@ -92,6 +94,7 @@ function loadRanks() {
 					for(var j = 0; j < bass.length; j=j+1) {
 						bd = bd + '<td>' + bass[j].first_name + ' ' + bass[j].last_name + '</td>';
 					}
+					bd = bd + '</tr>';
 					$row = $(bd);
 					$table.append($row);
 				}).fail(function(err) {
@@ -112,6 +115,7 @@ function loadRanks() {
 					for(var j = 0; j < cymbal.length; j=j+1) {
 						cym = cym + '<td>' + cymbal[j].first_name + ' ' + cymbal[j].last_name + '</td>';
 					}
+					cym = cym + '</tr>';
 					$row = $(cym);
 					$table.append($row);
 				}).fail(function(err) {
@@ -132,8 +136,36 @@ function loadRanks() {
 					for(var j = 0; j < mallet.length; j=j+1) {
 						key = key + '<td>' + mallet[j].first_name + ' ' + mallet[j].last_name + '</td>';
 					}
+					key = key + '</tr>';
 					$row = $(key);
 					$table.append($row);
+				}).fail(function(err) {
+					console.log(err);
+				});
+				// Basses
+				$.get({
+					url: 'api/parade.php',
+					data: {
+						a: 'loadSec',
+						s: 'Bass'
+					},
+					async: false
+				}).done(function(basses) {
+					if(!Array.isArray(basses)) {
+						return;
+					}
+					var b = '';
+					for(var j = 0; j < basses.length; j=j+1) {
+						if(j % 3 == 0) {
+							b = '<tr id="tb-row-b style="text-align:right"' + j + '"><td>BASS</td>';
+						}
+						b = b + '<td>' + basses[j].first_name + ' ' + basses[j].last_name + '</td>';
+						if(j % 3 == 2 || j == (basses.length-1)) {
+							b = b + '</tr>';
+							$row = $(b);
+							$table.append($row);
+						}
+					}
 				}).fail(function(err) {
 					console.log(err);
 				});

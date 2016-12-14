@@ -10,6 +10,7 @@ $shows_filt_sql = 'SELECT DISTINCT showname FROM saved_ranks INNER JOIN renumber
 $load_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ? and section = ?;';
 $load_all_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ?;';
 $load_dl_sql = 'SELECT * FROM band_members WHERE status = ?;';
+$load_sec_sql = 'SELECT * FROM band_members WHERE section = ?;';
 $result = array();
 
 if ($action == 'shows') {
@@ -39,6 +40,12 @@ if ($action == 'shows') {
     $drum = $_GET['d'];
     $show_query = $db->prepare($load_dl_sql);
     $show_query->bind_param('s', $drum);
+    $show_query->execute();
+    $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
+} elseif ($action == 'loadSec') {
+    $section = $_GET['s'];
+    $show_query = $db->prepare($load_sec_sql);
+    $show_query->bind_param('s', $section);
     $show_query->execute();
     $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
 }
