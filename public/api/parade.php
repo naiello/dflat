@@ -43,7 +43,7 @@ if ($action == 'shows') {
     $show_query->execute();
     $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
 } elseif ($action == 'loadAlt') {
-    $show_query = $db->prepare($shows_sql);
+    $show_query = $db->prepare($load_alt_sql);
     $show_result = $show_query->execute();
     $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
 }
