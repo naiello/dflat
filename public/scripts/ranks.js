@@ -361,6 +361,10 @@ $(function() {
                         fullRoster.push(mem);
                     });
 
+                    ranks.forEach(function (rank) {
+                        rankNumbers.push(rank.rank);
+                    });
+
                     getSavedRanks(populateTable);
                 });
             }

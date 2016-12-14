@@ -78,7 +78,7 @@ if ($action == 'roster') {
                 $rank['d_first'], $rank['d_last'],
                 $rank['number'], $show);
         $success = $update_query->execute();
-        $update_query->get_result()->fetch_all();
+        $update_query->get_result();
     }
     $result = array('success' => $success);
 } elseif ($action == 'savenew') {
