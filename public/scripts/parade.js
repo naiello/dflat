@@ -42,7 +42,8 @@ function loadRanks() {
 					data: {
 						a: 'loadDL',
 						d: 'SN'
-					}
+					},
+					async: false
 				}).done(function(snare) {
 					if(!Array.isArray(snare)) {
 						return;
@@ -56,22 +57,82 @@ function loadRanks() {
 				}).fail(function(err) {
 					console.log(err);
 				});
-				// AJAX request
 				$.get({
 					url: 'api/parade.php',
 					data: {
 						a: 'loadDL',
 						d: 'TN'
-					}
+					},
+					async: false
 				}).done(function(tenors) {
 					if(!Array.isArray(tenors)) {
 						return;
 					}
-					var tn = '<tr id="tb-row-sn"><td>TN</td>';
+					var tn = '<tr id="tb-row-tn"><td>TN</td>';
 					for(var j = 0; j < tenors.length; j=j+1) {
 						tn = tn + '<td>' + tenors[j].first_name + ' ' + tenors[j].last_name + '</td>';
 					}
 					$row = $(tn);
+					$table.append($row);
+				}).fail(function(err) {
+					console.log(err);
+				});
+				$.get({
+					url: 'api/parade.php',
+					data: {
+						a: 'loadDL',
+						d: 'BD'
+					},
+					async: false
+				}).done(function(bass) {
+					if(!Array.isArray(bass)) {
+						return;
+					}
+					var bd = '<tr id="tb-row-bd"><td>BD</td>';
+					for(var j = 0; j < bass.length; j=j+1) {
+						bd = bd + '<td>' + bass[j].first_name + ' ' + bass[j].last_name + '</td>';
+					}
+					$row = $(bd);
+					$table.append($row);
+				}).fail(function(err) {
+					console.log(err);
+				});
+				$.get({
+					url: 'api/parade.php',
+					data: {
+						a: 'loadDL',
+						d: 'CYM'
+					},
+					async: false
+				}).done(function(cymbal) {
+					if(!Array.isArray(cymbal)) {
+						return;
+					}
+					var cym = '<tr id="tb-row-cym"><td>CYM</td>';
+					for(var j = 0; j < cymbal.length; j=j+1) {
+						cym = cym + '<td>' + cymbal[j].first_name + ' ' + cymbal[j].last_name + '</td>';
+					}
+					$row = $(cym);
+					$table.append($row);
+				}).fail(function(err) {
+					console.log(err);
+				});
+				$.get({
+					url: 'api/parade.php',
+					data: {
+						a: 'loadDL',
+						d: 'KEY'
+					},
+					async: false
+				}).done(function(mallet) {
+					if(!Array.isArray(mallet)) {
+						return;
+					}
+					var key = '<tr id="tb-row-key"><td>KEY</td>';
+					for(var j = 0; j < mallet.length; j=j+1) {
+						key = key + '<td>' + mallet[j].first_name + ' ' + mallet[j].last_name + '</td>';
+					}
+					$row = $(key);
 					$table.append($row);
 				}).fail(function(err) {
 					console.log(err);
