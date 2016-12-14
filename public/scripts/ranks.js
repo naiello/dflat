@@ -358,6 +358,7 @@ $(function() {
         });
 
         $('#table-content').hide();
+        $('#choose-section-dialog').show();
         var $form = $('#form-choose-ranks');
         $form.show();
         $form.on('submit', function() {
