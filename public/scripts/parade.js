@@ -12,7 +12,7 @@ function loadRanks() {
 		url: 'api/parade.php',
 		data: {
 			a: 'loadAll',
-			show: 'MSU'
+			show: $.urlParam('g')
 		}
 	}).done(function(ranks) {
 		if(!Array.isArray(ranks)) {
@@ -192,8 +192,8 @@ $(function() {
 				return;
 			}
 
-			var $opt = $('<option></option>');
 			for(var i = 0; i < show.length; i++) {
+				var $opt = $('<option></option>');
 				$opt.val(show[i].showname);
 				$opt.html(show[i].showname);
 				$('#pick-game').append($opt);
