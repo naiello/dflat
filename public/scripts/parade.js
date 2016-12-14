@@ -31,11 +31,11 @@ function loadRanks() {
 			'<td>' + ranks[i+1].c_first + ' ' + ranks[i+1].c_last + '</td>' +
 			'<td>' + ranks[i+1].b_first + ' ' + ranks[i+1].b_last + '</td>' +
 			'<td>' + ranks[i+1].a_first + ' ' + ranks[i+1].a_last + '</td>' +
-			'<td>' + ranks[i+1].rank + '</td>'
+			'<td>' + ranks[i+1].rank + '</td></tr>'
 			);
 			$table.append($row);
 			// insert drums and basses here
-			if(ranks[i+1].rank=='36') {
+			if(ranks[i+1].rank==36) {
 				// AJAX request
 				$.get({
 					url: 'api/parade.php',
@@ -47,12 +47,12 @@ function loadRanks() {
 					if(!Array.isArray(snare)) {
 						return;
 					}
-					var sn = '<tr id="tb-row-sn"><td>SN</td>'
-					for(var j = 0; j < snare.length; i=i+1) {
-						sn = sn + '<td>' + snare[i].first_name + ' ' + snare[i].last_name + '</td>'
+					var $sn = '<tr id="tb-row-sn"></tr>';
+					$sn.append('<td>SN</td>');
+					for(var j = 0; j < snare.length; j=j+1) {
+						$sn.append('<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>');
 					}
-					$row = sn
-					$table.append($row);
+					$table.append($sn);
 				}).fail(function(err) {
 					console.log(err);
 				});
