@@ -6,6 +6,11 @@ $.urlParam = function(name) {
 function loadMemberList() {
     var sectionName = $.urlParam('s');
     $('.section-name-header').html(sectionName);
+    if(sectionName == 'Drumline') {
+		$('#status_dl').style.display='inline';
+	} else {
+		$('#status_dl').style.display='none';
+	}
     // AJAX request to server code -- returns JSON array of member objects
     $.get({
         url: 'api/section.php',

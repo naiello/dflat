@@ -34,6 +34,17 @@ function loadRanks() {
 			'<td>' + ranks[i+1].rank + '</td>'
 			);
 			$table.append($row);
+			// insert drums and basses here
+		//	if(i==36) {
+				// AJAX request
+		//		$.get({
+		//			url: 'api/ranks.php',
+		//			data: {
+		//				a: 'load',
+		//				show: 'MSU'
+		//			}
+		//		}).done(function(drumbass) {
+			}
 		}
 	}).fail(function(err) {
 		console.log(err);
