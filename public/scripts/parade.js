@@ -5,6 +5,8 @@ $.urlParam = function(name) {
 
 function loadRanks() {
 	var game = $.urlParam('g');
+	var $table = $('table tbody').html('');
+	var missing;
 	$('.game-name-header').html(game);
 
 	// AJAX request
@@ -13,14 +15,18 @@ function loadRanks() {
 		data: {
 			a: 'loadAll',
 			show: $.urlParam('g')
-		}
+		},
+		async: false
 	}).done(function(ranks) {
 		if(!Array.isArray(ranks)) {
 			return;
 		}
 
-		$table = $('table tbody').html('');
+		missing = []; //ranks that haven't been made for this show yet
 		for(var i = 0; i < ranks.length; i=i+2) {
+			if (!ranks[i].rank) {
+				missing.push(i);
+			}
 			$row = $('<tr id="tb-row-' + i + '">' +
 			'<td>' + ranks[i].rank + '</td>' +
 			'<td>' + ranks[i].d_first + ' ' + ranks[i].d_last + '</td>' +
@@ -157,7 +163,7 @@ function loadRanks() {
 					var b = '';
 					for(var j = 0; j < basses.length; j=j+1) {
 						if(j % 3 == 0) {
-							b = '<tr id="tb-row-b style="text-align:right"' + j + '"><td>BASS</td>';
+							b = '<tr id="tb-row-b' + j + '"><td>BASS</td>';
 						}
 						b = b + '<td>' + basses[j].first_name + ' ' + basses[j].last_name + '</td>';
 						if(j % 3 == 2 || j == (basses.length-1)) {
@@ -175,6 +181,38 @@ function loadRanks() {
 		console.log(err);
 		$('.alert-danger .msg').html('Failed to connect to database!');
 		$('.alert-danger').slideDown();
+	});
+
+	$.get({
+		url: 'api/parade.php',
+		data: {
+			a: 'loadAlt'
+		}
+	}).done(function(alternates) {
+		if(!Array.isArray(alternates)) {
+			return;
+		}
+		var alt = '';
+		for(var j = 0; j < alternates.length; j=j+1) {
+			if(j % 8 == 0) {
+				alt = '<tr id="tb-row-alt' + j + '"><td>Alt.</td>';
+			}
+			alt = alt + '<td>' + alternates[j].first_name + ' ' + alternates[j].last_name + '</td>';
+			if(j % 8 == 7 || j == (alternates.length-1)) {
+				alt = alt + '<td>Alt.</td></tr>';
+			} else if(j == (alternates.length-1)) {
+				alt = alt + '</tr>';	
+			}
+			$row = $(alt);
+			$table.append($row);
+		}
+	}).fail(function(err) {
+		console.log(err);
+	});
+
+	var $el = $('#missing');
+	missing.forEach(function(n) {
+		$el.append(n);
 	});
 }
 

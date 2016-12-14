@@ -10,10 +10,10 @@ $load_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank
 $load_all_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ?;';
 $load_dl_sql = 'SELECT * FROM band_members WHERE status = ?;';
 $load_sec_sql = 'SELECT * FROM band_members WHERE section = ?;';
+$load_alt_sql = 'SELECT * FROM band_members, saved_ranks WHERE saved_ranks.alt_first = band_members.first_name AND saved_ranks.alt_last = band_members.last_name;'; 
 $result = array();
 
 if ($action == 'shows') {
-    $show_query = '';
     $show_query = $db->prepare($shows_sql);
     $show_result = $show_query->execute();
     $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -41,6 +41,10 @@ if ($action == 'shows') {
     $show_query = $db->prepare($load_sec_sql);
     $show_query->bind_param('s', $section);
     $show_query->execute();
+    $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
+} elseif ($action == 'loadAlt') {
+    $show_query = $db->prepare($shows_sql);
+    $show_result = $show_query->execute();
     $result = $show_query->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
