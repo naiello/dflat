@@ -213,7 +213,7 @@ function saveUpdates() {
         ranks: JSON.stringify(ranks)
     }).done(function(result) {
         console.log(result);
-        $('#save-status').html('Saving...');
+        $('#save-status').html('All changes saved.');
     }).fail(function(err) {
         console.log(err);
         $('#save-status').addClass('text-bad').html('Error saving changes.');
