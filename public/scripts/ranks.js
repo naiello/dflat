@@ -355,7 +355,14 @@ $(function() {
                 getSectionRoster(generateNewRanks);
                 saveNew();
             } else {
-                getSavedRanks(populateTable);
+                getSectionRoster(function (roster, ranks) {
+                    roster.forEach(function (person) {
+                        var mem = new BandMember(person.first_name, person.last_name, person.is_core, person.is_new_member, person.times_ht_alt, person.times_pre_alt);
+                        fullRoster.push(mem);
+                    });
+
+                    getSavedRanks(populateTable);
+                });
             }
         });
     }
