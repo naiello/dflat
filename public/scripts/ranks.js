@@ -116,13 +116,23 @@ function generateNewRanks(roster, ranks) {
         }
     }
 
-    var pickMid = function() {
+    var pickNew = function() {
         if (newmem.length > 0) {
             return newmem.pop();
         } else if (returners.length > 0) {
             return returners.pop();
         } else {
+            return core.pop();
+        }
+    }
+
+    var pickRet = function() {
+        if (returners.length > 0) {
+            return returners.pop();
+        } else if (newmem.length > 0) {
             return newmem.pop();
+        } else {
+            return core.pop();
         }
     }
 
@@ -145,8 +155,8 @@ function generateNewRanks(roster, ranks) {
     ranks.forEach(function(rank) {
         var n = rank.rank;
         var aSpot = pickCore();
-        var bSpot = pickMid();
-        var cSpot = pickMid();
+        var bSpot = pickNew();
+        var cSpot = pickRet();
         var dSpot = pickCore();
 
         rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
