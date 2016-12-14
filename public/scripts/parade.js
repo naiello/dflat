@@ -41,7 +41,7 @@ function loadRanks() {
 					url: 'api/parade.php',
 					data: {
 						a: 'loadDL',
-						drum: 'SN'
+						d: 'SN'
 					}
 				}).done(function(snare) {
 					if(!Array.isArray(snare)) {
