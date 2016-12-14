@@ -1,6 +1,6 @@
 $.urlParam = function(name) {
 	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-	return (Array.isArray(results)) ? results[1] : undefined;
+	return (Array.isArray(results)) ? decodeURI(results[1]) : undefined;
 }
 
 function loadRanks() {
@@ -22,9 +22,9 @@ function loadRanks() {
 			return;
 		}
 
-		missing = []; //ranks that haven't been made for this show yet
+		missing = []; //ranks that have already been made for this show
 		for(var i = 0; i < ranks.length; i=i+2) {
-			if (!ranks[i].rank) {
+			if (ranks[i].rank) {
 				missing.push(i);
 			}
 			$row = $('<tr id="tb-row-' + i + '">' +
@@ -177,6 +177,13 @@ function loadRanks() {
 				});
 			}
 		}
+		var $el = $('#missing');
+		missing.forEach(function(n) {
+			$el.append(n);
+		});
+
+			//}
+		//}
 	}).fail(function(err) {
 		console.log(err);
 		$('.alert-danger .msg').html('Failed to connect to database!');
@@ -208,11 +215,6 @@ function loadRanks() {
 		}
 	}).fail(function(err) {
 		console.log(err);
-	});
-
-	var $el = $('#missing');
-	missing.forEach(function(n) {
-		$el.append(n);
 	});
 }
 

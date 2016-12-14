@@ -171,6 +171,7 @@ function generateNewRanks(roster, ranks) {
                 return '';
             }
         };
+	console.log(getBadge(aSpot));
 
         rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
         rankNumbers.push(n);
