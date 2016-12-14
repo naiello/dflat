@@ -205,7 +205,7 @@ function loadRanks() {
 				alt = '<tr id="tb-row-alt' + j + '"><td>Alt.</td>';
 			}
 			alt = alt + '<td>' + alternates[j].first_name + ' ' + alternates[j].last_name + '</td>';
-			if(j % 8 == 7 || j == (alternates.length-1)) {
+			if(j % 8 == 7) {
 				alt = alt + '<td>Alt.</td></tr>';
 				$row = $(alt);
 				$table.append($row);
