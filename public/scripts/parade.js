@@ -47,12 +47,12 @@ function loadRanks() {
 					if(!Array.isArray(snare)) {
 						return;
 					}
-					var $row = $('tbody tr').html('');
-					$row.append('<td>SN</td>');
+					var $sn = $('tbody tr').html('');
+					$sn.append('<td>SN</td>');
 					for(var j = 0; j < snare.length; j=j+1) {
-						$row.append('<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>');
+						$sn.append('<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>');
 					}
-					$table.append($row);
+					$table.append($sn);
 				}).fail(function(err) {
 					console.log(err);
 				});
