@@ -7,7 +7,7 @@ function loadMemberList() {
     var sectionName = $.urlParam('s');
     $('.section-name-header').html(sectionName);
     if(sectionName == 'Drumline') {
-		$('#status_dl').style.display='inline';
+		$('#status_dl').style.display='block';
 	} else {
 		$('#status_dl').style.display='none';
 	}
