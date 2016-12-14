@@ -69,7 +69,7 @@ function BandMember(first, last, core, newm, times_core, times_ht, times_pre) {
     this.timesPre = times_pre || 0;
     this.getBadge = function() {
         var coreBadge = '<span class="rank-badge rank-badge-core">CORE</span>';
-        var newBadge = '<span class="rank-badge rank-badge-core">NEW</span>';
+        var newBadge = '<span class="rank-badge rank-badge-new">NEW</span>';
         if (this.core) {
             return coreBadge;
         } else if (this.newMember) {
