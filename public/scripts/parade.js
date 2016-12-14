@@ -47,7 +47,7 @@ function loadRanks() {
 					if(!Array.isArray(snare)) {
 						return;
 					}
-					var $sn = $('tbody tr').html('');
+					var $sn = $('tr').html('');
 					$sn.append('<td>SN</td>');
 					for(var j = 0; j < snare.length; j=j+1) {
 						$sn.append('<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>');
