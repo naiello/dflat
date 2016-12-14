@@ -356,7 +356,6 @@ $(function() {
                 }
             });
         });
-        $('#pick-show').trigger('change');
 
         $('#table-content').hide();
         var $form = $('#form-choose-ranks');
