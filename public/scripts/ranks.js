@@ -249,6 +249,8 @@ function setDragAndDrop() {
             rank1[spot1] = rank2[spot2];
             rank2[spot2] = temp;
 
+            saveUpdates();
+
             $target.css('background-color', 'rgb(210, 210, 255)');
             $dragStart.css('background-color', 'rgb(210, 210, 255)');
             var count = 0;
@@ -288,10 +290,10 @@ function populateTable(ranks) {
 
         rankAssignments[rank.rank] = new RankAssignment(rank.rank, aSpot, bSpot, cSpot, dSpot);
         var $row = $('<tr id="row-'+rank.rank+'"><th scope="row">' + rank.rank + '</th>' +
-            '<td id="cell-'+rank.rank+'A">' + aSpot.firstName + ' ' + aSpot.lastName) + '</td>' +
-            '<td id="cell-'+rank.rank+'B">' + bSpot.firstName + ' ' + bSpot.lastName) + '</td>' +
-            '<td id="cell-'+rank.rank+'C">' + cSpot.firstName + ' ' + cSpot.lastName) + '</td>' +
-            '<td id="cell-'+rank.rank+'D">' + dSpot.firstName + ' ' + dSpot.lastName) + '</td></tr>');
+            '<td id="cell-'+rank.rank+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
+            '<td id="cell-'+rank.rank+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
+            '<td id="cell-'+rank.rank+'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
+            '<td id="cell-'+rank.rank+'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
 
         var rowTag = 'cell-' + rank.rank;
         $row.data(rankAssignments[rank.rank]);
@@ -353,7 +355,7 @@ $(function() {
                 getSectionRoster(generateNewRanks);
                 saveNew();
             } else {
-                getSavedRanks(function(ranks) { console.log(ranks); });
+                getSavedRanks(populateTable);
             }
         });
     }
