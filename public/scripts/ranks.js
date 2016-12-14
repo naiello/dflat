@@ -6,7 +6,7 @@ var showName;
 
 $.urlParam = function(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    return (Array.isArray(results)) ? results[1] : undefined;
+    return (Array.isArray(results)) ? decodeURI(results[1]) : undefined;
 }
 
 function getSectionRoster(callback) {
