@@ -200,11 +200,13 @@ function loadRanks() {
 			alt = alt + '<td>' + alternates[j].first_name + ' ' + alternates[j].last_name + '</td>';
 			if(j % 8 == 7 || j == (alternates.length-1)) {
 				alt = alt + '<td>Alt.</td></tr>';
+				$row = $(alt);
+				$table.append($row);
 			} else if(j == (alternates.length-1)) {
-				alt = alt + '</tr>';	
+				alt = alt + '</tr>';
+				$row = $(alt);
+				$table.append($row);	
 			}
-			$row = $(alt);
-			$table.append($row);
 		}
 	}).fail(function(err) {
 		console.log(err);
