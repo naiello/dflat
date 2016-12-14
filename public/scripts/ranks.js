@@ -158,11 +158,11 @@ function generateNewRanks(roster, ranks) {
             '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
 
         var rowTag = 'cell-' + n;
-        $row.data(rankAssignments[n]);
-        $row.find(rowTag + 'A').data(aSpot);
+        $row.data({rankNumber: n});
+        /*$row.find(rowTag + 'A').data(aSpot);
         $row.find(rowTag + 'B').data(bSpot);
         $row.find(rowTag + 'C').data(cSpot);
-        $row.find(rowTag + 'D').data(dSpot);
+        $row.find(rowTag + 'D').data(dSpot);*/
         $table.append($row);
     });
 
@@ -235,16 +235,18 @@ function setDragAndDrop() {
             $target.removeClass('hovering').html($dragStart.html());
             $dragStart.html(name1);
 
-            var data1 = $target.data();
+            /*var data1 = $target.data();
             $target.data($dragStart.data());
-            $dragStart.data(data1);
+            $dragStart.data(data1);*/
 
             var id1 = $dragStart.attr('id');
             var id2 = $target.attr('id');
             var spot1 = id1.substring(id1.length-1);
             var spot2 = id2.substring(id2.length-1);
-            var rank1 = $dragStart.parent().data();
-            var rank2 = $target.parent().data();
+            var num1 = $dragStart.parent().data().rankNumber;
+            var num2 = $target.parent().data().rankNumber;
+            var rank1 = rankAssignments[num1];
+            var rank2 = rankAssignments[num2];
             var temp = rank1[spot1];
             rank1[spot1] = rank2[spot2];
             rank2[spot2] = temp;
@@ -296,11 +298,11 @@ function populateTable(ranks) {
             '<td id="cell-'+rank.rank+'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
 
         var rowTag = 'cell-' + rank.rank;
-        $row.data(rankAssignments[rank.rank]);
-        $row.find(rowTag + 'A').data(aSpot);
+        $row.data({rankNumber: rank.rank});
+        /*$row.find(rowTag + 'A').data(aSpot);
         $row.find(rowTag + 'B').data(bSpot);
         $row.find(rowTag + 'C').data(cSpot);
-        $row.find(rowTag + 'D').data(dSpot);
+        $row.find(rowTag + 'D').data(dSpot);*/
         $table.append($row);
     });
 
