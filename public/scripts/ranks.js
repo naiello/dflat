@@ -171,7 +171,6 @@ function generateNewRanks(roster, ranks) {
         var cSpot = pickRet();
         var dSpot = pickCore();
 
-
         rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
         rankNumbers.push(n);
         $row = $('<tr id="row-' + n + '"><th scope="row">' + n + '</th>' +
