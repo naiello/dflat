@@ -4,6 +4,9 @@ var rankNumbers = [];
 var sectionName;
 var showName;
 
+var coreBadge = '<span class="rank-badge rank-badge-core">CORE</span>';
+var newBadge = '<span class="rank-badge rank-badge-core">NEW</span>';
+
 $.urlParam = function(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return (Array.isArray(results)) ? decodeURI(results[1]) : undefined;
@@ -159,13 +162,24 @@ function generateNewRanks(roster, ranks) {
         var cSpot = pickRet();
         var dSpot = pickCore();
 
+        var getBadge = function (pers) {
+            if (pers.core) {
+                return coreBadge;
+            } else if (pers.newMember) {
+                return newBadge;
+            } else {
+                return '';
+            }
+        };
+	console.log(getBadge(aSpot));
+
         rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
         rankNumbers.push(n);
         $row = $('<tr id="row-' + n + '"><th scope="row">' + n + '</th>' +
-            '<td id="cell-' + n + 'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
-            '<td id="cell-' + n + 'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
-            '<td id="cell-' + n + 'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
-            '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
+            '<td id="cell-' + n + 'A">' + aSpot.firstName + ' ' + aSpot.lastName + getBadge(aSpot) + '</td>' +
+            '<td id="cell-' + n + 'B">' + bSpot.firstName + ' ' + bSpot.lastName + getBadge(bSpot) + '</td>' +
+            '<td id="cell-' + n + 'C">' + cSpot.firstName + ' ' + cSpot.lastName + getBadge(cSpot) + '</td>' +
+            '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + getBadge(dSpot) + '</td></tr>');
 
         var rowTag = 'cell-' + n;
         $row.data({rankNumber: n});
@@ -333,12 +347,14 @@ $(function() {
     $('#btn-new-show-add').on('click', function() {
         $('#group-new-show').show();
         $('#group-current-shows').hide();
+        $('#do-ranks-exist').html('New ranks will be generated.');
         newShow = true;
     });
 
     $('#btn-new-show-cancel').on('click', function() {
         $('#group-new-show').hide();
         $('#group-current-shows').show();
+        $('#pick-show').trigger('change');
         newShow = false;
     });
 
@@ -348,6 +364,7 @@ $(function() {
             shows.forEach(function(show) {
                 $sel.append('<option value="' + show.showname + '">' + show.showname + '</option>');
             });
+            $sel.find('option:first').attr('selected', 'selected');
         });
 
         $('#pick-show, #pick-section').on('change', function () {
