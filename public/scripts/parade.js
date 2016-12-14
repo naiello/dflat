@@ -27,18 +27,28 @@ function loadRanks() {
 			if (ranks[i].rank) {
 				missing.push(i);
 			}
-			$row = $('<tr id="tb-row-' + i + '">' +
-			'<td>' + ranks[i].rank + '</td>' +
-			'<td>' + ranks[i].d_first + ' ' + ranks[i].d_last + '</td>' +
-			'<td>' + ranks[i].c_first + ' ' + ranks[i].c_last + '</td>' +
-			'<td>' + ranks[i].b_first + ' ' + ranks[i].b_last + '</td>' +
-			'<td>' + ranks[i].a_first + ' ' + ranks[i].a_last + '</td>' +
-			'<td>' + ranks[i+1].d_first + ' ' + ranks[i+1].d_last + '</td>' +
-			'<td>' + ranks[i+1].c_first + ' ' + ranks[i+1].c_last + '</td>' +
-			'<td>' + ranks[i+1].b_first + ' ' + ranks[i+1].b_last + '</td>' +
-			'<td>' + ranks[i+1].a_first + ' ' + ranks[i+1].a_last + '</td>' +
-			'<td>' + ranks[i+1].rank + '</td></tr>'
-			);
+			if ((i+1) < ranks.length) {
+				$row = $('<tr id="tb-row-' + i + '">' +
+				'<td>' + ranks[i].rank + '</td>' +
+				'<td>' + ranks[i].d_first + ' ' + ranks[i].d_last + '</td>' +
+				'<td>' + ranks[i].c_first + ' ' + ranks[i].c_last + '</td>' +
+				'<td>' + ranks[i].b_first + ' ' + ranks[i].b_last + '</td>' +
+				'<td>' + ranks[i].a_first + ' ' + ranks[i].a_last + '</td>' +
+				'<td>' + ranks[i+1].d_first + ' ' + ranks[i+1].d_last + '</td>' +
+				'<td>' + ranks[i+1].c_first + ' ' + ranks[i+1].c_last + '</td>' +
+				'<td>' + ranks[i+1].b_first + ' ' + ranks[i+1].b_last + '</td>' +
+				'<td>' + ranks[i+1].a_first + ' ' + ranks[i+1].a_last + '</td>' +
+				'<td>' + ranks[i+1].rank + '</td></tr>'
+				);
+			} else {
+				$row = $('<tr id="tb-row-' + i + '">' +
+				'<td>' + ranks[i].rank + '</td>' +
+				'<td>' + ranks[i].d_first + ' ' + ranks[i].d_last + '</td>' +
+				'<td>' + ranks[i].c_first + ' ' + ranks[i].c_last + '</td>' +
+				'<td>' + ranks[i].b_first + ' ' + ranks[i].b_last + '</td>' +
+				'<td>' + ranks[i].a_first + ' ' + ranks[i].a_last + '</td></tr>'
+				);
+			}
 			$table.append($row);
 			// insert drums and basses here
 			if(ranks[i+1].rank==36) {
