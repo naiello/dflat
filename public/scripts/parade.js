@@ -35,7 +35,7 @@ function loadRanks() {
 			);
 			$table.append($row);
 			// insert drums and basses here
-			if(i==36) {
+			if(ranks[i+1].rank==36) {
 				// AJAX request
 				$.get({
 					url: 'api/parade.php',
