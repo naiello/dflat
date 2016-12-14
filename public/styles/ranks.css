@@ -48,10 +48,13 @@ tbody td:active, tbody td.hovering {
 }
 
 #form-choose-ranks {
-    display: hidden;
     padding-left: 32px;
 }
 
 #do-ranks-exist {
     color: darkgreen;
+}
+
+#choose-section-dialog {
+    display: none;
 }
