@@ -47,12 +47,32 @@ function loadRanks() {
 					if(!Array.isArray(snare)) {
 						return;
 					}
-					var $sn = $('tr').html('');
-					$sn.append('<td>SN</td>');
+					var sn = '<tr id="tb-row-sn"><td>SN</td>';
 					for(var j = 0; j < snare.length; j=j+1) {
-						$sn.append('<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>');
+						sn = sn + '<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>';
 					}
-					$table.append($sn);
+					$row = $(sn);
+					$table.append($row);
+				}).fail(function(err) {
+					console.log(err);
+				});
+				// AJAX request
+				$.get({
+					url: 'api/parade.php',
+					data: {
+						a: 'loadDL',
+						d: 'TN'
+					}
+				}).done(function(tenors) {
+					if(!Array.isArray(tenors)) {
+						return;
+					}
+					var tn = '<tr id="tb-row-sn"><td>TN</td>';
+					for(var j = 0; j < tenors.length; j=j+1) {
+						tn = tn + '<td>' + tenors[j].first_name + ' ' + tenors[j].last_name + '</td>';
+					}
+					$row = $(tn);
+					$table.append($row);
 				}).fail(function(err) {
 					console.log(err);
 				});
