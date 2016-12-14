@@ -327,8 +327,8 @@ $(function() {
     });
 
     $('#btn-new-show-cancel').on('click', function() {
-        $('#group-new-show').show();
-        $('#group-current-shows').hide();
+        $('#group-new-show').hide();
+        $('#group-current-shows').show();
         newShow = false;
     });
 
