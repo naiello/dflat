@@ -176,12 +176,12 @@ function loadRanks() {
 					console.log(err);
 				});
 			}
+		//}
+			var $el = $('#missing');
+			missing.forEach(function(n) {
+				$el.append(n + ", ");
+			});
 		}
-		var $el = $('#missing');
-		missing.forEach(function(n) {
-			$el.append(n);
-		});
-
 			//}
 		//}
 	}).fail(function(err) {
