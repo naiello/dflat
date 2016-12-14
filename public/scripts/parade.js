@@ -9,7 +9,7 @@ function loadRanks() {
 
 	// AJAX request
 	$.get({
-		url: 'api/ranks.php',
+		url: 'api/parade.php',
 		data: {
 			a: 'loadAll',
 			show: 'MSU'
@@ -23,27 +23,39 @@ function loadRanks() {
 		for(var i = 0; i < ranks.length; i=i+2) {
 			$row = $('<tr id="tb-row-' + i + '">' +
 			'<td>' + ranks[i].rank + '</td>' +
-			'<td draggable = "true">' + ranks[i].d_first + ' ' + ranks[i].d_last + '</td>' +
-			'<td draggable = "true">' + ranks[i].c_first + ' ' + ranks[i].c_last + '</td>' +
-			'<td draggable = "true">' + ranks[i].b_first + ' ' + ranks[i].b_last + '</td>' +
-			'<td draggable = "true">' + ranks[i].a_first + ' ' + ranks[i].a_last + '</td>' +
-			'<td draggable = "true">' + ranks[i+1].d_first + ' ' + ranks[i+1].d_last + '</td>' +
-			'<td draggable = "true">' + ranks[i+1].c_first + ' ' + ranks[i+1].c_last + '</td>' +
-			'<td draggable = "true">' + ranks[i+1].b_first + ' ' + ranks[i+1].b_last + '</td>' +
-			'<td draggable = "true">' + ranks[i+1].a_first + ' ' + ranks[i+1].a_last + '</td>' +
+			'<td>' + ranks[i].d_first + ' ' + ranks[i].d_last + '</td>' +
+			'<td>' + ranks[i].c_first + ' ' + ranks[i].c_last + '</td>' +
+			'<td>' + ranks[i].b_first + ' ' + ranks[i].b_last + '</td>' +
+			'<td>' + ranks[i].a_first + ' ' + ranks[i].a_last + '</td>' +
+			'<td>' + ranks[i+1].d_first + ' ' + ranks[i+1].d_last + '</td>' +
+			'<td>' + ranks[i+1].c_first + ' ' + ranks[i+1].c_last + '</td>' +
+			'<td>' + ranks[i+1].b_first + ' ' + ranks[i+1].b_last + '</td>' +
+			'<td>' + ranks[i+1].a_first + ' ' + ranks[i+1].a_last + '</td>' +
 			'<td>' + ranks[i+1].rank + '</td>'
 			);
 			$table.append($row);
 			// insert drums and basses here
-		//	if(i==36) {
+			if(i==36) {
 				// AJAX request
-		//		$.get({
-		//			url: 'api/ranks.php',
-		//			data: {
-		//				a: 'load',
-		//				show: 'MSU'
-		//			}
-		//		}).done(function(drumbass) {
+				$.get({
+					url: 'api/parade.php',
+					data: {
+						a: 'loadDL',
+						drum: 'SN'
+					}
+				}).done(function(snare) {
+					if(!Array.isArray(snare)) {
+						return;
+					}
+					var sn = '<tr id="tb-row-sn"><td>SN</td>'
+					for(var j = 0; j < snare.length; i=i+1) {
+						sn = sn + '<td>' + snare[i].first_name + ' ' + snare[i].last_name + '</td>'
+					}
+					$row = sn
+					$table.append($row);
+				}).fail(function(err) {
+					console.log(err);
+				});
 			}
 		}
 	}).fail(function(err) {
@@ -58,7 +70,7 @@ $(function() {
 		$('.main').hide();
 		var $dialog = $('#choose-game-dialog');
 		$.get({
-			url: 'api/ranks.php',
+			url: 'api/parade.php',
 			data: {
 				a: 'shows'
 			}
