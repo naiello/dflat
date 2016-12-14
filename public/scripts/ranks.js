@@ -4,8 +4,6 @@ var rankNumbers = [];
 var sectionName;
 var showName;
 
-var coreBadge = '<span class="rank-badge rank-badge-core">CORE</span>';
-var newBadge = '<span class="rank-badge rank-badge-core">NEW</span>';
 
 $.urlParam = function(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -69,6 +67,17 @@ function BandMember(first, last, core, newm, times_core, times_ht, times_pre) {
     this.timesCore = times_core;
     this.timesHT = times_ht || 0;
     this.timesPre = times_pre || 0;
+    this.getBadge = function() {
+        var coreBadge = '<span class="rank-badge rank-badge-core">CORE</span>';
+        var newBadge = '<span class="rank-badge rank-badge-core">NEW</span>';
+        if (this.core) {
+            return coreBadge;
+        } else if (this.newMember) {
+            return newBadge;
+        } else {
+            return '';
+        }
+    };
 }
 
 function RankAssignment(num, a, b, c, d) {
@@ -162,23 +171,14 @@ function generateNewRanks(roster, ranks) {
         var cSpot = pickRet();
         var dSpot = pickCore();
 
-        var getBadge = function (pers) {
-            if (pers.core) {
-                return coreBadge;
-            } else if (pers.newMember) {
-                return newBadge;
-            } else {
-                return '';
-            }
-        };
 
         rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
         rankNumbers.push(n);
         $row = $('<tr id="row-' + n + '"><th scope="row">' + n + '</th>' +
-            '<td id="cell-' + n + 'A">' + aSpot.firstName + ' ' + aSpot.lastName + getBadge(aSpot) + '</td>' +
-            '<td id="cell-' + n + 'B">' + bSpot.firstName + ' ' + bSpot.lastName + getBadge(bSpot) + '</td>' +
-            '<td id="cell-' + n + 'C">' + cSpot.firstName + ' ' + cSpot.lastName + getBadge(cSpot) + '</td>' +
-            '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + getBadge(dSpot) + '</td></tr>');
+            '<td id="cell-' + n + 'A">' + aSpot.firstName + ' ' + aSpot.lastName + aSpot.getBadge() + '</td>' +
+            '<td id="cell-' + n + 'B">' + bSpot.firstName + ' ' + bSpot.lastName + bSpot.getBadge() + '</td>' +
+            '<td id="cell-' + n + 'C">' + cSpot.firstName + ' ' + cSpot.lastName + cSpot.getBadge() + '</td>' +
+            '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + dSpot.getBadge() + '</td></tr>');
 
         var rowTag = 'cell-' + n;
         $row.data({rankNumber: n});
@@ -323,10 +323,10 @@ function populateTable(ranks) {
 
         rankAssignments[rank.rank] = new RankAssignment(rank.rank, aSpot, bSpot, cSpot, dSpot);
         var $row = $('<tr id="row-'+rank.rank+'"><th scope="row">' + rank.rank + '</th>' +
-            '<td id="cell-'+rank.rank+'A">' + aSpot.firstName + ' ' + aSpot.lastName + '</td>' +
-            '<td id="cell-'+rank.rank+'B">' + bSpot.firstName + ' ' + bSpot.lastName + '</td>' +
-            '<td id="cell-'+rank.rank+'C">' + cSpot.firstName + ' ' + cSpot.lastName + '</td>' +
-            '<td id="cell-'+rank.rank+'D">' + dSpot.firstName + ' ' + dSpot.lastName + '</td></tr>');
+            '<td id="cell-'+rank.rank+'A">' + aSpot.firstName + ' ' + aSpot.lastName + aSpot.getBadge() + '</td>' +
+            '<td id="cell-'+rank.rank+'B">' + bSpot.firstName + ' ' + bSpot.lastName + bSpot.getBadge() + '</td>' +
+            '<td id="cell-'+rank.rank+'C">' + cSpot.firstName + ' ' + cSpot.lastName + cSpot.getBadge() + '</td>' +
+            '<td id="cell-'+rank.rank+'D">' + dSpot.firstName + ' ' + dSpot.lastName + dSpot.getBadge() + '</td></tr>');
 
         var rowTag = 'cell-' + rank.rank;
         $row.data({rankNumber: rank.rank});
