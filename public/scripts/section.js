@@ -144,7 +144,7 @@ $(function() {
             last_name: $('#last-name').val(),
             section: $.urlParam('s'),
             level: $('input[name=level]:checked').val(),
-            status: ($('#status option:selected').val() == "" && and $.urlParam('s') == "Drumline") ? $('#status_dl option:selected').val() : $('#status option:selected').val(),
+            status: ($('#status option:selected').val() == "" && $.urlParam('s') == "Drumline") ? $('#status_dl option:selected').val() : $('#status option:selected').val(),
             year: parseInt($('#year option:selected').val())
         }).done(function(result) {
             console.log(result);
