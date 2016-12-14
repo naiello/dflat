@@ -76,6 +76,10 @@ thead {
     color: darkgreen;
 }
 
+.text-subtle {
+    color: #888;
+}
+
 input[type=text], select {
     padding: 4px;
     margin: 8px;

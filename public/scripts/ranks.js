@@ -179,6 +179,8 @@ function saveNew() {
         console.log(row);
     });
 
+    $('#save-status').removeClass('text-bad').html('Saving...');
+
     $.get('api/ranks.php', {
         a: 'savenew',
         s: sectionName,
@@ -186,8 +188,10 @@ function saveNew() {
         ranks: JSON.stringify(ranks)
     }).done(function(result) {
         console.log(result);
+        $('#save-status').html('All changes saved.');
     }).fail(function(err) {
         console.log(err);
+        $('#save-status').addClass('text-bad').html('Error saving changes.');
     });
 }
 
@@ -200,6 +204,8 @@ function saveUpdates() {
         console.log(row);
     });
 
+    $('#save-status').removeClass('text-bad').html('Saving...');
+
     $.get('api/ranks.php', {
         a: 'update',
         s: sectionName,
@@ -207,8 +213,10 @@ function saveUpdates() {
         ranks: JSON.stringify(ranks)
     }).done(function(result) {
         console.log(result);
+        $('#save-status').html('Saving...');
     }).fail(function(err) {
         console.log(err);
+        $('#save-status').addClass('text-bad').html('Error saving changes.');
     });
 }
 
@@ -361,7 +369,7 @@ $(function() {
         $('#choose-section-dialog').show();
         var $form = $('#form-choose-ranks');
         $form.show();
-        $form.on('submit', function() {
+        $form.on('submit', function(evt) {
             evt.preventDefault();
             var showName = (newShow) ? $('#inp-new-show-name').val() : $('#pick-show option:selected').val();
             if (!showName) {

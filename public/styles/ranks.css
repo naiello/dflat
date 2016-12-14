@@ -58,3 +58,7 @@ tbody td:active, tbody td.hovering {
 #choose-section-dialog {
     display: none;
 }
+
+#save-status {
+    text-align: right;
+}
