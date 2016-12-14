@@ -51,3 +51,7 @@ tbody td:active, tbody td.hovering {
     display: hidden;
     padding-left: 32px;
 }
+
+#do-ranks-exist {
+    color: darkgreen;
+}

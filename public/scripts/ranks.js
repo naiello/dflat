@@ -350,7 +350,7 @@ $(function() {
                 });
 
                 if (found) {
-                    $('#do-ranks-exist').html('');
+                    $('#do-ranks-exist').html('Existing ranks found.');
                 } else {
                     $('#do-ranks-exist').html('New ranks will be generated.');
                 }
