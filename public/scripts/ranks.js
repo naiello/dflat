@@ -323,12 +323,14 @@ $(function() {
     $('#btn-new-show-add').on('click', function() {
         $('#group-new-show').show();
         $('#group-current-shows').hide();
+        $('#do-ranks-exist').html('New ranks will be generated.');
         newShow = true;
     });
 
     $('#btn-new-show-cancel').on('click', function() {
         $('#group-new-show').hide();
         $('#group-current-shows').show();
+        $('#pick-show').trigger('change');
         newShow = false;
     });
 
@@ -338,6 +340,7 @@ $(function() {
             shows.forEach(function(show) {
                 $sel.append('<option value="' + show.showname + '">' + show.showname + '</option>');
             });
+            $sel.find('option:first').attr('selected', 'selected');
         });
 
         $('#pick-show, #pick-section').on('change', function () {
