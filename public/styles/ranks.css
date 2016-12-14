@@ -62,3 +62,21 @@ tbody td:active, tbody td.hovering {
 #save-status {
     text-align: right;
 }
+
+.rank-badge {
+    font-size: 7pt;
+    border-radius: 4px;
+    margin: 4px;
+    font-weight: bold;
+    padding: 2px;
+}
+
+.rank-badge-core {
+    background-color: darkblue;
+    color: white;
+}
+
+.rank-badge-new {
+    background-color: #333;
+    color: white;
+}
