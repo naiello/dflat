@@ -176,8 +176,17 @@ function loadRanks() {
 							b = '<tr id="tb-row-b' + j + '"><td>BASS</td>';
 						}
 						b = b + '<td>' + basses[j].first_name + ' ' + basses[j].last_name + '</td>';
-						if(j % 3 == 2 || j == (basses.length-1)) {
-							b = b + '</tr>';
+						if(j % 3 == 2) {
+							b = b + '<td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+							$row = $(b);
+							$table.append($row);
+
+						} else if (j == (basses.length-1)) {
+							if(j % 3 == 0) {
+								b = b + '<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+							} else {
+								b = b + '<td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+							}
 							$row = $(b);
 							$table.append($row);
 						}
