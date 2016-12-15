@@ -105,6 +105,7 @@ function generateNewRanks(roster, ranks) {
     var core = [];
     var returners = [];
     var newmem = [];
+    var inactive = [];
 
     var $table = $('table tbody');
     $table.html('');
@@ -151,7 +152,9 @@ function generateNewRanks(roster, ranks) {
     roster.forEach(function(person) {
         var mem = new BandMember(person.first_name, person.last_name, person.is_core, person.is_new_member, person.times_ht_alt, person.times_pre_alt);
         fullRoster.push(mem);
-        if (mem.core) {
+        if (mem.status !== '') {
+            inactive.push(mem);
+        } else if (mem.core) {
             core.push(mem);
         } else if (mem.newMember) {
             newmem.push(mem);
@@ -213,6 +216,15 @@ function generateNewRanks(roster, ranks) {
         $row.data({rankNumber: n});
         $table.append($row);
     });
+
+    if (newmem.length > 0 || inactive.length > 0) {
+        var $alts = $('#alternates ul');
+        var nextRankWithAlt = 0;
+        newmem.forEach(function(alt) {
+            rankAssignments[rankNumbers[nextRankWithAlt]].alt = alt;
+            $alts.append('<li>' + alt.firstName + ' ' + alt.lastName + alt.getBadge() + '</li>');
+        });
+    }
 
     setDragAndDrop();
     saveNew();
