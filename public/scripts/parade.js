@@ -6,7 +6,6 @@ $.urlParam = function(name) {
 function loadRanks() {
 	var game = $.urlParam('g');
 	var $table = $('table tbody').html('');
-	var missing;
 	$('.game-name-header').html(game);
 
 	// AJAX request
@@ -22,14 +21,12 @@ function loadRanks() {
 			return;
 		}
 
-		missing = []; //ranks that have already been made for this show
+		if (ranks.length < 78) { //checks for missing ranks
+			var $el = $('#missing');
+			$el.append("Warning: Not all ranks have been generated for this show");
+		}
+
 		for(var i = 0; i < ranks.length; i=i+2) {
-			if (ranks[i].rank) {
-				missing.push(ranks[i].rank);
-			}
-			if (ranks[i+1].rank) {
-				missing.push(ranks[i+1].rank);
-			}
 			if ((i+1) < ranks.length) {
 				$row = $('<tr id="tb-row-' + i + '">' +
 				'<td>' + ranks[i].rank + '</td>' +
@@ -190,15 +187,6 @@ function loadRanks() {
 				});
 			}
 		}
-		var $el = $('#missing');
-		$el.append("The following ranks have not yet been created for this show: ");
-		for (var x = 0; x <= 78; x++) {
-		//missing.forEach(function(n) {
-			if (x in missing) { 
-				$el.append((x) + ", ");
-			}
-		}	
-		//});
 	}).fail(function(err) {
 		console.log(err);
 		$('.alert-danger .msg').html('Failed to connect to database!');
