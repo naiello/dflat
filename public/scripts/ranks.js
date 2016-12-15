@@ -164,7 +164,7 @@ function generateNewRanks(roster, ranks) {
     shuffle(returners);
     shuffle(newmem);
 
-    ranks.forEach(function(rank) {
+    /*ranks.forEach(function(rank) {
         var n = rank.rank;
         var aSpot = pickCore();
         var bSpot = pickNew();
@@ -184,7 +184,32 @@ function generateNewRanks(roster, ranks) {
         /*$row.find(rowTag + 'A').data(aSpot);
         $row.find(rowTag + 'B').data(bSpot);
         $row.find(rowTag + 'C').data(cSpot);
-        $row.find(rowTag + 'D').data(dSpot);*/
+        $row.find(rowTag + 'D').data(dSpot);
+        $table.append($row);
+    });*/
+    // Fill all CORE spots first
+    // only put two core band members in a rank when we are sure there
+    // are enough core band to put one in each rank
+    ranks.forEach(function(rank) {
+        rankNumbers.push(n);
+        rankAssignments[rank.rank] = new RankAssignment(n, null, null, null, pickCore());
+    });
+    ranks.forEach(function(rank) {
+        rankAssignments[rank.rank].A = pickCore();
+    });
+    ranks.forEach(function(rank) {
+        rankAssignments[rank.rank].B = pickNew();
+        rankAssignments[rank.rank].C = pickRet();
+        var aSpot = rankAssignments[rank.rank].A;
+        var bSpot = rankAssignments[rank.rank].B;
+        var cSpot = rankAssignments[rank.rank].C;
+        var dSpot = rankAssignments[rank.rank].D;
+        $row = $('<tr id="row-' + n + '"><th scope="row">' + n + '</th>' +
+            '<td id="cell-' + n + 'A">' + aSpot.firstName + ' ' + aSpot.lastName + aSpot.getBadge() + '</td>' +
+            '<td id="cell-' + n + 'B">' + bSpot.firstName + ' ' + bSpot.lastName + bSpot.getBadge() + '</td>' +
+            '<td id="cell-' + n + 'C">' + cSpot.firstName + ' ' + cSpot.lastName + cSpot.getBadge() + '</td>' +
+            '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + dSpot.getBadge() + '</td></tr>');
+        $row.data({rankNumber: n});
         $table.append($row);
     });
 
