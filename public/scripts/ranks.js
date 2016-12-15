@@ -191,13 +191,14 @@ function generateNewRanks(roster, ranks) {
     // only put two core band members in a rank when we are sure there
     // are enough core band to put one in each rank
     ranks.forEach(function(rank) {
-        rankNumbers.push(n);
-        rankAssignments[rank.rank] = new RankAssignment(n, null, null, null, pickCore());
+        rankNumbers.push(rank.rank);
+        rankAssignments[rank.rank] = new RankAssignment(rank.rank, null, null, null, pickCore());
     });
     ranks.forEach(function(rank) {
         rankAssignments[rank.rank].A = pickCore();
     });
     ranks.forEach(function(rank) {
+        var n = rank.rank;
         rankAssignments[rank.rank].B = pickNew();
         rankAssignments[rank.rank].C = pickRet();
         var aSpot = rankAssignments[rank.rank].A;
