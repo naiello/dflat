@@ -153,7 +153,7 @@ function generateNewRanks(roster, ranks) {
     roster.forEach(function(person) {
         var mem = new BandMember(person.first_name, person.last_name, person.is_core, person.is_new_member, person.times_ht_alt, person.times_pre_alt);
         fullRoster.push(mem);
-        if (mem.status !== '') {
+        if (person.status !== '') {
             inactive.push(mem);
         } else if (mem.core) {
             core.push(mem);
