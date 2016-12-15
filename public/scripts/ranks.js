@@ -97,8 +97,8 @@ function RankAssignment(num, a, b, c, d) {
             c_last: this.C.lastName,
             d_first: this.D.firstName,
             d_last: this.D.lastName,
-            alt_first: this.alt.firstName,
-            alt_last: this.alt.lastName,
+            alt_first: (this.alt) ? this.alt.firstName : null,
+            alt_last: (this.alt) ? this.alt.lastName : null,
             number: this.number
         };
     }
