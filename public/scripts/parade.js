@@ -68,6 +68,13 @@ function loadRanks() {
 					for(var j = 0; j < snare.length; j=j+1) {
 						sn = sn + '<td>' + snare[j].first_name + ' ' + snare[j].last_name + '</td>';
 					}
+					if(snare.length < 9) {
+						var count = 9 - snare.length;
+						while(count > 0) {
+							sn = sn + '<td></td>';
+							count = count - 1;
+						}
+					}
 					sn = sn + '</tr>';
 					$row = $(sn);
 					$table.append($row);
@@ -88,6 +95,13 @@ function loadRanks() {
 					var tn = '<tr id="tb-row-tn"><td>TN</td>';
 					for(var j = 0; j < tenors.length; j=j+1) {
 						tn = tn + '<td>' + tenors[j].first_name + ' ' + tenors[j].last_name + '</td>';
+					}
+					if(tenors.length < 9) {
+						var count = 9 - tenors.length;
+						while(count > 0) {
+							tn = tn + '<td></td>';
+							count = count - 1;
+						}
 					}
 					tn = tn + '</tr>';
 					$row = $(tn);
@@ -110,6 +124,13 @@ function loadRanks() {
 					for(var j = 0; j < bass.length; j=j+1) {
 						bd = bd + '<td>' + bass[j].first_name + ' ' + bass[j].last_name + '</td>';
 					}
+					if(bass.length < 9) {
+						var count = 9 - bass.length;
+						while(count > 0) {
+							bd = bd + '<td></td>';
+							count = count - 1;
+						}
+					}
 					bd = bd + '</tr>';
 					$row = $(bd);
 					$table.append($row);
@@ -131,6 +152,13 @@ function loadRanks() {
 					for(var j = 0; j < cymbal.length; j=j+1) {
 						cym = cym + '<td>' + cymbal[j].first_name + ' ' + cymbal[j].last_name + '</td>';
 					}
+					if(cymbal.length < 9) {
+						var count = 9 - cymbal.length;
+						while(count > 0) {
+							cym = cym + '<td></td>';
+							count = count - 1;
+						}
+					}
 					cym = cym + '</tr>';
 					$row = $(cym);
 					$table.append($row);
@@ -151,6 +179,13 @@ function loadRanks() {
 					var key = '<tr id="tb-row-key"><td>KEY</td>';
 					for(var j = 0; j < mallet.length; j=j+1) {
 						key = key + '<td>' + mallet[j].first_name + ' ' + mallet[j].last_name + '</td>';
+					}
+					if(mallet.length < 9) {
+						var count = 9 - mallet.length;
+						while(count > 0) {
+							key = key + '<td></td>';
+							count = count - 1;
+						}
 					}
 					key = key + '</tr>';
 					$row = $(key);
