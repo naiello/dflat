@@ -341,6 +341,10 @@ function populateTable(ranks) {
         var dSpot = findMember(rank.d_first, rank.d_last);
 
         rankAssignments[rank.rank] = new RankAssignment(rank.rank, aSpot, bSpot, cSpot, dSpot);
+        if (rank.alt_first) {
+            rankAssignments[rank.rank].alt = findMember(rank.alt_first, rank.alt_last);
+            $('#alternates ul').append('<li>' + rank.alt_first + ' ' + rank.alt_last + rankAssignments[rank.rank].alt.getBadge() + '</li>');
+        }
         var $row = $('<tr id="row-'+rank.rank+'"><th scope="row">' + rank.rank + '</th>' +
             '<td id="cell-'+rank.rank+'A">' + aSpot.firstName + ' ' + aSpot.lastName + aSpot.getBadge() + '</td>' +
             '<td id="cell-'+rank.rank+'B">' + bSpot.firstName + ' ' + bSpot.lastName + bSpot.getBadge() + '</td>' +
