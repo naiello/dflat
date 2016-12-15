@@ -7,6 +7,7 @@ $success = FALSE;
 $roster_sql = <<<EOF
     SELECT  b.first_name AS first_name,
             b.last_name AS last_name,
+            b.status AS status,
             b.core AS is_core,
             b.new_member AS is_new_member,
             c.core_spot AS times_core,
