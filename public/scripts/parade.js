@@ -240,7 +240,8 @@ function loadRanks() {
 	$.get({
 		url: 'api/parade.php',
 		data: {
-			a: 'loadAlt'
+			a: 'loadAlt',
+			show: $.urlParam('g')
 		}
 	}).done(function(alternates) {
 		if(!Array.isArray(alternates)) {
