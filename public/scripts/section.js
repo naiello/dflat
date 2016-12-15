@@ -56,7 +56,7 @@ function loadMemberList() {
             if (status && statusColors.hasOwnProperty(status)) {
                 status = '<span class="' + statusColors[status] + '">' + status + "</span>";
             }
-            // generate a new row for the table
+            // generate a new row for the table.
             $row = $('<tr id="tb-row-' + i + '">' +
                 '<td>' + mem[i].first_name + '</td>' +
                 '<td>' + mem[i].last_name + '</td>' +
