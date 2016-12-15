@@ -78,8 +78,8 @@ function loadMemberList() {
 
                 // set the form to match the stored values
                 $('#add-mode').val('update');
-                $('#first-name').val(mem.first_name);
-                $('#last-name').val(mem.last_name);
+                $('#first-name').val(mem.first_name).attr('disabled', 'disabled');
+                $('#last-name').val(mem.last_name).attr('disabled', 'disabled');
                 $('#year').val(mem.year);
                 if (mem.core === "Y") {
                     $('input[name=level][value=core]').prop('checked', true);
@@ -128,8 +128,8 @@ $(function() {
     $('#btn-add-member').on('click', function(e) {
         // clear and show form
         $('#add-mode').val('new');
-        $('#first-name').val('');
-        $('#last-name').val('');
+        $('#first-name').val('').attr('disabled', '');
+        $('#last-name').val('').attr('disabled', '');
         $('#update-member-dialog').modal();
     });
     $('#btn-submit').on('click', () => {
