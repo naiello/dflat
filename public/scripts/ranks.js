@@ -86,6 +86,7 @@ function RankAssignment(num, a, b, c, d) {
     this.B = b;
     this.C = c;
     this.D = d;
+    this.alt = null;
     this.generateServerJSON = function() {
         return {
             a_first: this.A.firstName,
@@ -222,6 +223,8 @@ function generateNewRanks(roster, ranks) {
         var nextRankWithAlt = 0;
         newmem.forEach(function(alt) {
             rankAssignments[rankNumbers[nextRankWithAlt]].alt = alt;
+            console.log(rankNumbers[nextRankWithAlt]);
+            nextRankWithAlt++;
             $alts.append('<li>' + alt.firstName + ' ' + alt.lastName + alt.getBadge() + '</li>');
         });
     }
