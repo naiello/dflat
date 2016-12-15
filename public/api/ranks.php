@@ -25,8 +25,8 @@ $shows_sql = 'SELECT DISTINCT showname FROM saved_ranks;';
 $shows_filt_sql = 'SELECT DISTINCT showname FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE renumbered.section = ?;';
 $load_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ? and section = ?;';
 $load_all_sql = 'SELECT * FROM saved_ranks INNER JOIN renumbered ON saved_ranks.rank = renumbered.rank WHERE showname = ?;';
-$ins_sql = 'INSERT INTO saved_ranks (a_first, a_last, b_first, b_last, c_first, c_last, d_first, d_last, rank, showname) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
-$update_sql = 'UPDATE saved_ranks SET a_first = ?, a_last = ?, b_first = ?, b_last = ?, c_first = ?, c_last = ?, d_first = ?, d_last = ? WHERE rank = ? and showname = ?;';
+$ins_sql = 'INSERT INTO saved_ranks (a_first, a_last, b_first, b_last, c_first, c_last, d_first, d_last, alt_first, alt_last, rank, showname) VALUES (?,?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?);';
+$update_sql = 'UPDATE saved_ranks SET a_first = ?, a_last = ?, b_first = ?, b_last = ?, c_first = ?, c_last = ?, d_first = ?, d_last = ?, alt_first = ?, alt_last = ? WHERE rank = ? and showname = ?;';
 $result = array();
 
 if ($action == 'roster') {
@@ -73,10 +73,11 @@ if ($action == 'roster') {
     $ranks = json_decode($_GET['ranks'], TRUE);
     $update_query = $db->prepare($update_sql);
     foreach ($ranks as $rank) {
-        $update_query->bind_param('ssssssssss', $rank['a_first'], $rank['a_last'],
+        $update_query->bind_param('ssssssssssss', $rank['a_first'], $rank['a_last'],
                 $rank['b_first'], $rank['b_last'],
                 $rank['c_first'], $rank['c_last'],
                 $rank['d_first'], $rank['d_last'],
+                $rank['alt_first'], $rank['alt_last'],
                 $rank['number'], $show);
         $success = $update_query->execute();
         $update_query->get_result();
@@ -88,10 +89,11 @@ if ($action == 'roster') {
     $ranks = json_decode($_GET['ranks'], TRUE);
     $ins_query = $db->prepare($ins_sql);
     foreach ($ranks as $rank) {
-        $ins_query->bind_param('ssssssssss', $rank['a_first'], $rank['a_last'],
+        $ins_query->bind_param('ssssssssssss', $rank['a_first'], $rank['a_last'],
                 $rank['b_first'], $rank['b_last'],
                 $rank['c_first'], $rank['c_last'],
                 $rank['d_first'], $rank['d_last'],
+                $rank['alt_first'], $rank['alt_last'],
                 $rank['number'], $show);
         $success = $ins_query->execute();
         $ins_query->get_result();

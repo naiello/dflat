@@ -97,6 +97,8 @@ function RankAssignment(num, a, b, c, d) {
             c_last: this.C.lastName,
             d_first: this.D.firstName,
             d_last: this.D.lastName,
+            alt_first: this.alt.firstName,
+            alt_last: this.alt.lastName,
             number: this.number
         };
     }
@@ -168,29 +170,6 @@ function generateNewRanks(roster, ranks) {
     shuffle(returners);
     shuffle(newmem);
 
-    /*ranks.forEach(function(rank) {
-        var n = rank.rank;
-        var aSpot = pickCore();
-        var bSpot = pickNew();
-        var cSpot = pickRet();
-        var dSpot = pickCore();
-
-        rankAssignments[n] = new RankAssignment(n, aSpot, bSpot, cSpot, dSpot);
-        rankNumbers.push(n);
-        $row = $('<tr id="row-' + n + '"><th scope="row">' + n + '</th>' +
-            '<td id="cell-' + n + 'A">' + aSpot.firstName + ' ' + aSpot.lastName + aSpot.getBadge() + '</td>' +
-            '<td id="cell-' + n + 'B">' + bSpot.firstName + ' ' + bSpot.lastName + bSpot.getBadge() + '</td>' +
-            '<td id="cell-' + n + 'C">' + cSpot.firstName + ' ' + cSpot.lastName + cSpot.getBadge() + '</td>' +
-            '<td id="cell-' + n + 'D">' + dSpot.firstName + ' ' + dSpot.lastName + dSpot.getBadge() + '</td></tr>');
-
-        var rowTag = 'cell-' + n;
-        $row.data({rankNumber: n});
-        /*$row.find(rowTag + 'A').data(aSpot);
-        $row.find(rowTag + 'B').data(bSpot);
-        $row.find(rowTag + 'C').data(cSpot);
-        $row.find(rowTag + 'D').data(dSpot);
-        $table.append($row);
-    });*/
     // Fill all CORE spots first
     // only put two core band members in a rank when we are sure there
     // are enough core band to put one in each rank
